@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Merienda&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+.App {
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to top,
+    #3f51b1 0%,
+    #5a55ae 13%,
+    #7b5fac 25%,
+    #8f6aae 38%,
+    #a86aa4 50%,
+    #cc6b8e 62%,
+    #f18271 75%,
+    #f3a469 87%,
+    #f7c978 100%
+  );
+}
+
+.logo {
+  display: block;
+  padding-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+}
+
+.home-title {
+  font-size: 1.25rem;
+  font-family: "Merienda", cursive;
+  display: block;
+  margin: 0 auto;
+  padding: 20px 20px;
+  text-align: center;
+}
+
+.search-form {
+  min-height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-bar {
+  font-family: "Montserrat", sans-serif;
+  width: 50%;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.search-button {
+  font-family: "Montserrat", sans-serif;
+  border: white 4px solid;
+  background: lightcoral;
+  border-radius: 10px;
+  margin-left: 5px;
+  padding: 10px 20px;
+  color: white;
+}
+
+.search-button:hover {
+  background: rgb(255, 86, 86);
+}
+
+.recipes {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

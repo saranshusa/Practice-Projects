@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Newspaper Today</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link
+      rel="shortcut icon"
+      href="{% static 'favicon.png'%}"
+      type="image/png"
+    />
+  </head>
+  <body>
+      <div class="header"><p>Daily E-Newspaper by Saransh</p></div>
+      <div class="app">
+          <div class="paper">
+              <div class="logo dainik"></div>
+              <div class="download">
+                  <div class="name"><p>Dainik Jagran</p></div>
+                  <div class="download-btn"><a href="{{ dainik }}"><button>Download</button></a></div>
+              </div>
+          </div>
+
+          <div class="paper">
+              <div class="logo amar"></div>
+              <div class="download">
+                  <div class="name"><p>Amar Ujala</p></div>
+                  <div class="download-btn"><a href="{{ amar }}"><button>Download</button></a></div>
+              </div>
+          </div>
+
+          <div class="paper">
+              <div class="logo navbharat"></div>
+              <div class="download">
+                  <div class="name"><p>Navbharat Times</p></div>
+                  <div class="download-btn"><a href="{{ navbharat }}"><button>Download</button></a></div>
+              </div>
+          </div>
+
+          <div class="paper">
+              <div class="logo rashtriya"></div>
+              <div class="download">
+                  <div class="name"><p>Rashtriya Sahara</p></div>
+                  <div class="download-btn"><a href="{{ rashtriya }}"><button>Download</button></a></div>
+              </div>
+          </div>
+
+          <div class="paper">
+              <div class="logo asian"></div>
+              <div class="download">
+                  <div class="name"><p>Asian Age</p></div>
+                  <div class="download-btn"><a href="{{ asian }}"><button>Download</button></a></div>
+              </div>
+          </div>
+
+          <div class="paper">
+              <div class="logo financial"></div>
+              <div class="download">
+                  <div class="name"><p>Financial Age</p></div>
+                  <div class="download-btn"><a href="{{ financial }}"><button>Download</button></a></div>
+              </div>
+          </div>
+      </div>
+  </body>
+</html>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Section = styled.div`
     background-color: #00CDB4;
-    margin: 0 0 50px 0;
+    margin: 0 0 40px 0;
     display: flex;
     height: 65px;
     `;
@@ -32,9 +32,9 @@ const NavRight = styled.nav`
 `;
 
 const NavLink = styled(Link)`
-    margin: 0 10px;
+    margin: 0 15px;
     padding: 0px;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 500;
     color: black;
     text-decoration: none ;

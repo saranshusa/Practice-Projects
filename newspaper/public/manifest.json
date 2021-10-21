@@ -1,0 +1,16 @@
+{
+    "short_name": "Daily E-Newspaper",
+    "name": "Daily E-Newspaper",
+    "icons": [
+        {
+            "src": "/images/icon.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff"
+}

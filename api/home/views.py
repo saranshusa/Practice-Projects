@@ -1,9 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
-from bs4 import BeautifulSoup
 import requests
 import json
+
+# epaper
+from bs4 import BeautifulSoup
+
+# auth
+from .models import User
 
 # Create your views here.
 
@@ -38,3 +42,30 @@ def epaper(request):
     Data = json.dumps(responseData)
 
     return HttpResponse(Data)
+
+
+def auth(request):
+    username = request.GET['user']
+    password = request.GET['pass']
+
+    try:
+        getRecord = User.objects.get(phone=username)
+        if getRecord.code == password:
+            responseData = {'status': 'success', 'message': 'Logged in!'}
+            Data = json.dumps(responseData)
+            return HttpResponse(Data)
+        else:
+            responseData = {'status': 'failed',
+                            'message': 'Enter correct password to login.'}
+            Data = json.dumps(responseData)
+            return HttpResponse(Data)
+
+    except:
+        record = User(phone=username, code=password)
+        record.save()
+
+        responseData = {'status': 'success',
+                        'message': 'Account created and logged in!.'}
+        Data = json.dumps(responseData)
+
+        return HttpResponse(Data)

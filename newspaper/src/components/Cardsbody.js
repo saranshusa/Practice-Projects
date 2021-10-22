@@ -118,8 +118,10 @@ const Download = styled.button`
 const Cardsbody = () => {
 
     const getLink = async (link) => {
-
-        const response = await fetch(`https://dry-crag-58790.herokuapp.com/https://saranshapi.herokuapp.com/epaper/?query=${link}`);
+        
+        /* CORS = 'https://dry-crag-58790.herokuapp.com/'; */
+        /* const response = await fetch(`${CORS}https://saranshapi.herokuapp.com/epaper/?query=${link}`); */
+        const response = await fetch(`https://saranshapi.herokuapp.com/epaper/?query=${link}`);
         const data = await response.json();
         window.location.replace(data.link);
     };

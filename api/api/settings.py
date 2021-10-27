@@ -79,7 +79,14 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # For Heroku Postgress
     'default': dj_database_url.config()
+
+    # For localhost sqlite
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
 
@@ -130,4 +137,5 @@ django_heroku.settings(locals())
 
 CORS_ALLOWED_ORIGINS = [
     "https://saransh-epaper.netlify.app",
+    "https://saransh-auth.netlify.app",
 ]

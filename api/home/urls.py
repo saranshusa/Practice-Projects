@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('epaper/', views.epaper, name='epaper'),
     path('auth/', views.auth, name='auth'),
+    path('todo/', views.todo, name='todo'),
 ]

@@ -5,9 +5,15 @@ import json
 
 # epaper
 from bs4 import BeautifulSoup
+from requests.api import get
 
 # auth
 from .models import User
+import string
+import random
+
+# # todo
+from .models import ToDo
 
 # Create your views here.
 
@@ -51,7 +57,8 @@ def auth(request):
     try:
         getRecord = User.objects.get(phone=username)
         if getRecord.code == password:
-            responseData = {'status': 'success', 'message': 'Logged in!'}
+            responseData = {'status': 'success',
+                            'message': 'Logged in!', 'uid': getRecord.uid}
             Data = json.dumps(responseData)
             return HttpResponse(Data)
         else:
@@ -61,11 +68,54 @@ def auth(request):
             return HttpResponse(Data)
 
     except:
-        record = User(phone=username, code=password)
+        flag = 1
+        while(flag):
+            UID = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                          for _ in range(5))
+            try:
+                getRecord = User.objects.get(uid=UID)
+            except:
+                flag = 0
+                record = User(phone=username, code=password, uid=UID)
+                record.save()
+
+                responseData = {'status': 'success', 'uid': UID,
+                                'message': 'Account created and logged in!.'}
+                Data = json.dumps(responseData)
+
+        return HttpResponse(Data)
+
+
+def todo(request):
+    UID = request.GET['uid']
+    Tilte = request.GET['note']
+    Delete = request.GET['delete']
+
+    if Delete != '':
+        ToDo.objects.filter(uid=UID, note=Delete).delete()
+
+        responseData = {'status': 'success',
+                        'message': 'Note added'}
+        Data = json.dumps(responseData)
+
+        return HttpResponse(Data)
+
+    elif Tilte != '':
+        record = ToDo(uid=UID, note=Tilte)
         record.save()
 
         responseData = {'status': 'success',
-                        'message': 'Account created and logged in!.'}
+                        'message': 'Note added'}
         Data = json.dumps(responseData)
+
+        return HttpResponse(Data)
+
+    else:
+        getRecord = ToDo.objects.filter(uid=UID)
+        notes = []
+        for recordItem in getRecord:
+            notes.append(recordItem.note)
+
+        Data = json.dumps(notes)
 
         return HttpResponse(Data)

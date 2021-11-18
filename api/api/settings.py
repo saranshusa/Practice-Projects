@@ -89,6 +89,8 @@ DATABASES = {
     # }
 }
 
+#PASSWORD name123 USERNAME admin
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -138,4 +140,5 @@ django_heroku.settings(locals())
 CORS_ALLOWED_ORIGINS = [
     "https://saransh-epaper.netlify.app",
     "https://saransh-auth.netlify.app",
+    "https://saransh-emailauth.netlify.app",
 ]

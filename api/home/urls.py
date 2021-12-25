@@ -6,5 +6,6 @@ urlpatterns = [
     path('epaper/', views.epaper, name='epaper'),
     path('auth/', views.auth, name='auth'),
     path('todo/', views.todo, name='todo'),
-    path('emailauth/', views.emailauth, name='emailauth')
+    path('emailauth/', views.emailauth, name='emailauth'),
+    path('sendemail/', views.sendemail, name='sendemail')
 ]

@@ -21,6 +21,8 @@ import os
 import smtplib
 import dotenv
 
+#sendemail
+
 # Create your views here.
 
 
@@ -241,3 +243,38 @@ def emailauth(request):
 
 
     return HttpResponse(Data)
+
+def sendemail(request):
+    To = request.GET['to']
+    Message = request.GET['message']
+    Subject = request.GET['subject']
+    From = request.GET['from']
+
+    if To != '' and Message != '' and Subject != '':
+        dotenv.read_dotenv()
+        EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS')
+        EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+
+        if From == '':
+            From = 'Unknown Source'
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+
+            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+
+            msg = f'Subject: {Subject}\n\n{Message}<br><br><b>From:</b> {From}'
+
+            smtp.sendmail(EMAIL_ADDRESS, To, msg)
+
+        responseData = {'status': 'success',
+                                    'message': 'Email sent successfully!'}
+        Data = json.dumps(responseData)
+
+        return HttpResponse(Data)
+
+    else:
+        responseData = {'status': 'error',
+                                    'message': 'Some or all of the required data was not provided!'}
+        Data = json.dumps(responseData)
+
+        return HttpResponse(Data)

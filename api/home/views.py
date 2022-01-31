@@ -23,6 +23,10 @@ import dotenv
 
 #sendemail
 
+#banao
+from .models import Banao
+
+
 # Create your views here.
 
 
@@ -277,4 +281,62 @@ def sendemail(request):
                                     'message': 'Some or all of the required data was not provided!'}
         Data = json.dumps(responseData)
 
+        return HttpResponse(Data)
+
+def banao(request):
+    firstName = request.GET['fname']
+    lastName = request.GET['lname']
+    username = request.GET['user']
+    email = request.GET['email']
+    password = request.GET['pass']
+    line1 = request.GET['line1']
+    city = request.GET['city']
+    state = request.GET['state']
+    pincode = request.GET['pin']
+    role = request.GET['role']
+    mode = request.GET['mode']
+
+    try:
+        if mode == 'signup':
+            try:
+                getRecord = Banao.objects.get(email=email)
+                responseData = {'status': 'error',
+                                    'message': 'Email already registered!.'}
+                Data = json.dumps(responseData)
+                return HttpResponse(Data)
+
+            except:
+                record = Banao(fname=firstName, lname=lastName, username=username, email=email, password=password, line1=line1, city=city, state=state, pincode=pincode, role=role)
+                record.save()
+
+                responseData = {'status': 'success',
+                                    'message': 'Account created and logged in!.', 'role': role}
+                Data = json.dumps(responseData)
+                return HttpResponse(Data)
+
+
+        else:
+            try:
+                getRecord = Banao.objects.get(email=email)
+                if getRecord.password == password:
+                    responseData = {'status': 'success',
+                                            'message': 'Logged in!', 'role': getRecord.role, 'fname': getRecord.fname, 'lname': getRecord.lname, 'username': getRecord.username, 'email': getRecord.email, 'line1': getRecord.line1, 'city': getRecord.city, 'state': getRecord.state, 'pincode': getRecord.pincode}
+                    Data = json.dumps(responseData)
+                    return HttpResponse(Data)
+                else:
+                    responseData = {'status': 'error',
+                                            'message': 'Incorrect password!'}
+                    Data = json.dumps(responseData)
+                    return HttpResponse(Data)
+
+            except:
+                responseData = {'status': 'error',
+                                            'message': 'Email not registered!'}
+                Data = json.dumps(responseData)
+                return HttpResponse(Data)
+
+    except:
+        responseData = {'status': 'error',
+                                            'message': 'Server Error'}
+        Data = json.dumps(responseData)
         return HttpResponse(Data)

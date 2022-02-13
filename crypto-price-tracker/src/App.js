@@ -59,6 +59,9 @@ function App() {
     }
     localStorage.setItem("TOKEN", JSON.stringify(priceList));
 
+    var EmailData = [];
+    var emailFlag = false;
+
     const length = priceList[0].length;
     if (length > 5) {
       var changeList = localStorage.getItem("BASE_TOKEN");
@@ -99,6 +102,30 @@ function App() {
           ).toFixed(2);
           changeList[x][4] = last60;
         }
+
+        // Email Notifications
+        if (length > 60) {
+          if (parseFloat(changeList[x][4]) > 3.0) {
+            var pair = `${changeList[x][0].toUpperCase()} : ${
+              changeList[x][4]
+            }%           `;
+            EmailData.push(pair);
+            emailFlag = true;
+          }
+          if (parseFloat(changeList[x][4]) < -3.0) {
+            var pair = `${changeList[x][0].toUpperCase()} : ${
+              changeList[x][4]
+            }%           `;
+            EmailData.push(pair);
+            emailFlag = true;
+          }
+        }
+      }
+
+      if (emailFlag) {
+        fetch(
+          `https://dry-crag-58790.herokuapp.com/https://saranshapi.herokuapp.com/sendemail/?to=saranshgupta987@gmail.com&subject=Cryptocurrency Price Alert&message=${EmailData}&from=Crypto Boy 2.0`
+        );
       }
 
       localStorage.setItem("BASE_TOKEN", JSON.stringify(changeList));
@@ -200,61 +227,6 @@ function App() {
                       : changeData[index][4] + " %")}{" "}
                 </p>
               )}
-
-              {/* Email Notifications */}
-
-              {changeData &&
-                parseFloat(changeData[index][4]) > 3.0 &&
-                fetch(
-                  `https://saranshapi.herokuapp.com/sendemail/?to=saranshgupta987@gmail.com&subject=${changeData[
-                    index
-                  ][0].toUpperCase()} Increased by ${
-                    changeData[index][4]
-                  }%&message=The price of ${changeData[
-                    index
-                  ][0].toUpperCase()} has changed by ${
-                    changeData[index][4]
-                  }% since last 1 hour.&from=Crypto Boy`
-                )}
-              {changeData &&
-                parseFloat(changeData[index][4]) > 3.0 &&
-                fetch(
-                  `https://saranshapi.herokuapp.com/sendemail/?to=iamsamarthg@yahoo.com&subject=${changeData[
-                    index
-                  ][0].toUpperCase()} Increased by ${
-                    changeData[index][4]
-                  }%&message=The price of ${changeData[
-                    index
-                  ][0].toUpperCase()} has changed by ${
-                    changeData[index][4]
-                  }% since last 1 hour.&from=Crypto Boy`
-                )}
-              {changeData &&
-                parseFloat(changeData[index][4]) < -3.0 &&
-                fetch(
-                  `https://saranshapi.herokuapp.com/sendemail/?to=saranshgupta987@gmail.com&subject=${changeData[
-                    index
-                  ][0].toUpperCase()} Decreased by ${
-                    changeData[index][4]
-                  }%&message=The price of ${changeData[
-                    index
-                  ][0].toUpperCase()} has changed by ${
-                    changeData[index][4]
-                  }% since last 1 hour.&from=Crypto Boy`
-                )}
-              {changeData &&
-                parseFloat(changeData[index][4]) < -3.0 &&
-                fetch(
-                  `https://saranshapi.herokuapp.com/sendemail/?to=iamsamarthg@yahoo.com&subject=${changeData[
-                    index
-                  ][0].toUpperCase()} Decreased by ${
-                    changeData[index][4]
-                  }%&message=The price of ${changeData[
-                    index
-                  ][0].toUpperCase()} has changed by ${
-                    changeData[index][4]
-                  }% since last 1 hour.&from=Crypto Boy`
-                )}
             </DataRow>
           ))}
       </Table>

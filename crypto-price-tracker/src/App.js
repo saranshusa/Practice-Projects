@@ -124,7 +124,7 @@ function App() {
 
       if (emailFlag) {
         fetch(
-          `https://dry-crag-58790.herokuapp.com/https://saranshapi.herokuapp.com/sendemail/?to=saranshgupta987@gmail.com&subject=Cryptocurrency Price Alert&message=${EmailData}&from=Crypto Boy 2.0`
+          `https://dry-crag-58790.herokuapp.com/https://saranshapi.herokuapp.com/sendemail/?to=saranify@gmail.com&subject=Cryptocurrency Price Alert&message=${EmailData}&from=Crypto Boy 2.0`
         );
       }
 

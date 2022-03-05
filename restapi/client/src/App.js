@@ -1,29 +1,23 @@
-import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authToken, setAuthToken] = useState("");
+  let Navigate = useNavigate();
 
   useEffect(() => {
     checkAuth();
   }, []);
 
   function checkAuth() {
-    const AuthToken = sessionStorage.getItem("authToken");
+    const AuthToken = sessionStorage.getItem("TOKEN");
     if (AuthToken) {
-      setIsLoggedIn(true);
-      // console.log("TRUE");
-      setAuthToken(AuthToken);
+      Navigate("/dashboard");
     } else {
-      setIsLoggedIn(false);
+      Navigate("/login");
     }
-    // console.log(authToken);
   }
 
-  return (
-    <>{isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />}</>
-  );
+  return <></>;
 }
 
 export default App;

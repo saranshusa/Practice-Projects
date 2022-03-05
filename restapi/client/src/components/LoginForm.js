@@ -1,14 +1,31 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  let Navigate = useNavigate();
 
-  const submitForm = (e) => {
+  const BASE_URL = "http://localhost:5000";
+
+  const submitForm = async (e) => {
     e.preventDefault();
-    fetch("/api/").then((data) => console.log(data));
+    setErrorMsg("loading...");
+    axios
+      .post(`${BASE_URL}/auth/signup`, {
+        email: email.toLowerCase(),
+        password: password,
+      })
+      .then((response) => {
+        setErrorMsg(response.data["message"]);
+        if (response.status === 201) {
+          sessionStorage.setItem("TOKEN", email);
+          Navigate("/dashboard");
+        }
+      });
   };
 
   return (
@@ -20,12 +37,14 @@ const LoginForm = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
+          required
         />
         <input
           type="password"
           value={[password]}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          required
         />
         <button type="submit">Login</button>
       </form>

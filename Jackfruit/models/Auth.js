@@ -9,9 +9,9 @@ const AuthSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  otp: {
-    type: String,
-    default: 000000,
+  data: {
+    type: Array,
+    required: false,
   },
   timestamp: {
     type: Date,
@@ -19,4 +19,4 @@ const AuthSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Auth", AuthSchema);
+module.exports = mongoose.model("JackfruitAuth", AuthSchema);

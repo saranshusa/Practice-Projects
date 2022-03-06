@@ -32,15 +32,20 @@ function App() {
 
   function CalculateHRA(e) {
     e.preventDefault();
+
     let result = 0;
     if (cityType === "Metro City") {
       result = Math.min(
-        0.5 * parseFloat(basic),
-        parseFloat(rent) - 0.1 * parseFloat(basic),
-        parseFloat(HRA)
+        0.5 * parseFloat(basic * 12),
+        parseFloat(rent * 12) - 0.1 * parseFloat(basic * 12),
+        parseFloat(HRA * 12)
       ).toFixed(2);
     } else {
-      result = Math.min(0.4 * basic, rent - 0.1 * basic, HRA).toFixed(2);
+      result = Math.min(
+        0.4 * parseFloat(basic * 12),
+        parseFloat(rent * 12) - 0.1 * parseFloat(basic * 12),
+        parseFloat(HRA * 12)
+      ).toFixed(2);
     }
     setAppHRA(result);
     setPopup(true);
@@ -48,10 +53,10 @@ function App() {
 
   function CalculateTaxInc() {
     let result =
-      parseFloat(basic) +
-      parseFloat(LTA) +
-      parseFloat(HRA) +
-      parseFloat(FA) -
+      parseFloat(basic * 12) +
+      parseFloat(LTA * 12) +
+      parseFloat(HRA * 12) +
+      parseFloat(FA * 12) -
       parseFloat(appHRA) -
       parseFloat(invest) -
       parseFloat(medclaim);
@@ -59,12 +64,12 @@ function App() {
     setTaxInc(result);
 
     const data = {
-      basic: basic,
-      LTA: LTA,
-      HRA: HRA,
-      FA: FA,
+      basic: basic * 12,
+      LTA: LTA * 12,
+      HRA: HRA * 12,
+      FA: FA * 12,
       invest: invest,
-      rent: rent,
+      rent: rent * 12,
       cityType: cityType,
       medclaim: medclaim,
       appHRA: appHRA,
@@ -77,7 +82,6 @@ function App() {
         data: data,
       })
       .then((res) => {
-        console.log(res.data["message"]);
         if (res.status === 200) {
           setPopup(false);
           setTaxPopup(true);

@@ -221,19 +221,19 @@ function App() {
           <div className="box">
             <div className="row">
               <p className="head">Basic Salary</p>
-              <span>₹ {basic}</span>
+              <span>₹ {basic * 12}</span>
             </div>
             <div className="row">
               <p className="head">LTA</p>
-              <span>₹ {LTA}</span>
+              <span>₹ {LTA * 12}</span>
             </div>
             <div className="row">
               <p className="head">HRA</p>
-              <span>₹ {HRA}</span>
+              <span>₹ {HRA * 12}</span>
             </div>
             <div className="row">
               <p className="head">Food Allowance</p>
-              <span>₹ {FA}</span>
+              <span>₹ {FA * 12}</span>
             </div>
             <div className="row">
               <p className="head">Investments</p>
@@ -241,7 +241,7 @@ function App() {
             </div>
             <div className="row">
               <p className="head">Rent</p>
-              <span>₹ {rent}</span>
+              <span>₹ {rent * 12}</span>
             </div>
             <div className="row">
               <p className="head">City Type</p>

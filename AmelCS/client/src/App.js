@@ -75,6 +75,10 @@ const Main = styled.div`
   width: 100vw;
   display: grid;
   grid-template-rows: 60px 150px auto;
+
+  @media screen and (max-width: 500px) {
+    grid-template-rows: 60px auto auto;
+  }
 `;
 
 const Nav = styled.div`
@@ -83,6 +87,18 @@ const Nav = styled.div`
   justify-content: space-between;
   align-items: center;
   border-radius: 0 0 5px 5px;
+
+  @media screen and (max-width: 500px) {
+    .logout {
+      display: none;
+    }
+
+    .nav-img {
+      margin-left: 10px !important;
+      margin-right: 10px !important;
+      width: 100%;
+    }
+  }
 
   .nav-img {
     margin-left: 25px;
@@ -110,6 +126,11 @@ const Body = styled.div`
   grid-template-columns: 50vw 50vw;
   grid-template-rows: auto auto;
   place-content: center;
+
+  @media screen and (max-width: 500px) {
+    grid-template-columns: 100vw;
+    grid-template-rows: auto auto auto auto;
+  }
 `;
 
 const Card = styled.div`
@@ -122,6 +143,10 @@ const Card = styled.div`
   border-radius: 10px;
   padding: 25px 20px;
   text-align: center;
+
+  @media screen and (max-width: 500px) {
+    width: 90vw !important;
+  }
 
   h1 {
     margin-bottom: 20px;
@@ -148,7 +173,19 @@ const Card = styled.div`
 
 const Container = styled.div`
   display: grid;
-  place-content: center;
+  place-items: center;
+
+  @media screen and (max-width: 500px) {
+    h1 {
+      margin: 15px 5px;
+      font-size: 1.25rem;
+    }
+
+    p {
+      max-width: 90vw !important;
+      font-size: 1.1rem !important;
+    }
+  }
 
   h1 {
     text-align: center;
@@ -158,9 +195,9 @@ const Container = styled.div`
   }
 
   p {
+    margin: 15px 10px;
     max-width: 1000px;
     text-align: justify;
     font-size: 1.25rem;
-    margin: 15px 10px;
   }
 `;

@@ -184,7 +184,7 @@ function Admin() {
           res.data["data"][2]["name"] &&
             setFile3({
               name: res.data["data"][2]["name"],
-              link: res.data["data"][3]["link"],
+              link: res.data["data"][2]["link"],
             });
           setAuthDetails(true);
         }
@@ -371,6 +371,17 @@ const Nav = styled.div`
   align-items: center;
   border-radius: 0 0 5px 5px;
 
+  @media screen and (max-width: 500px) {
+    .nav-img {
+      margin-left: 10px !important;
+      margin-right: 10px !important;
+    }
+
+    .signup {
+      display: none;
+    }
+  }
+
   .nav-img {
     margin-left: 25px;
     height: 35px;
@@ -392,6 +403,15 @@ const Nav = styled.div`
 const Tab = styled.div`
   display: grid;
   grid-template-columns: 50vw 50vw;
+
+  @media screen and (max-width: 500px) {
+    place-items: center;
+
+    p {
+      text-align: center;
+      font-size: 1rem !important;
+    }
+  }
 
   p {
     font-size: 1.25rem;
@@ -417,6 +437,17 @@ const Body = styled.div`
 `;
 
 const Form = styled.form`
+  @media screen and (max-width: 500px) {
+    .input-div {
+      width: 100% !important;
+      padding: 0 15px;
+    }
+
+    h2 {
+      max-width: 95% !important;
+    }
+  }
+
   h2 {
     text-align: center;
     margin-bottom: 40px;
@@ -474,6 +505,23 @@ const Right = styled.div`
   @media screen and (max-width: 600px) {
     .input-div {
       width: 90vw !important;
+    }
+
+    .auth-box {
+      width: 90% !important;
+      margin: 15px auto;
+      min-width: 90vw !important;
+    }
+
+    .auth-head {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-head span {
+      margin: 10px 0;
+      width: 100%;
+      margin-left: 0px !important;
     }
   }
 

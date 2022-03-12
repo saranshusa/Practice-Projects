@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import IMAGE from "../assets/bg15-1.svg";
 import axios from "axios";
@@ -107,6 +107,18 @@ const Nav = styled.div`
   align-items: center;
   border-radius: 0 0 5px 5px;
 
+  @media screen and (max-width: 500px) {
+    .nav-img {
+      margin-left: 10px !important;
+      margin-right: 10px !important;
+      width: 100%;
+    }
+
+    .signup {
+      display: none;
+    }
+  }
+
   .nav-img {
     margin-left: 25px;
     height: 35px;
@@ -149,7 +161,6 @@ const Right = styled.div`
   background: linear-gradient(to top, #70e1f5, #ffd194);
 
   @media screen and (max-width: 600px) {
-    background: url(${IMAGE});
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

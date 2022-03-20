@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
@@ -41,30 +41,44 @@ function Login() {
   }, []);
 
   return (
-    <Main>
-      <Nav>
-        <img
-          className="nav-img"
-          onClick={() => navigate("/")}
-          src="https://www.canada.ca/etc/designs/canada/wet-boew/assets/sig-blk-en.svg"
-        />
-        <Link className="signup" to="/">
-          Home
-        </Link>
-        {/* <Link className="signup" to="/signup">
-          Sign Up
-        </Link> */}
-      </Nav>
-      <Body>
-        <Left>
-          <p>Sign in to your IRCC secure account</p>
-        </Left>
-        <Right>
-          <Form onSubmit={HandleLogin}>
-            <h2>Sign In to your Account</h2>
-            {errorMsg && <p>{errorMsg}</p>}
-            <div className="input-div">
-              <span>Username</span>
+    <Container>
+      <Main>
+        <div className="lang">Français</div>
+        <Nav>
+          <img
+            className="nav-img"
+            src="https://www.canada.ca/etc/designs/canada/wet-boew/assets/sig-blk-en.svg"
+          />
+        </Nav>
+        <div className="navbar">
+          <div></div>
+          <div className="menu-items">
+            <div>Definitions</div>
+            <div>Frequently Asked Questions (FAQ)</div>
+            <div style={{ borderRight: "1px solid white" }}>Help</div>
+          </div>
+          <div></div>
+        </div>
+        <div className="routes">
+          <p>Login</p>
+          <p>&#129066;</p>
+          <p>Sign In / Sign Up</p>
+        </div>
+        <div className="header">
+          <h1>Welcome to GCKey</h1>
+          <div
+            style={{
+              borderBottom: "1px solid #af3c43",
+              marginTop: "5px",
+            }}
+          />
+        </div>
+
+        <Body>
+          <Left>
+            <div className="fields">
+              <h2>Sign In</h2>
+              <p>Username: (required)</p>
               <input
                 type="text"
                 value={email}
@@ -75,9 +89,7 @@ function Login() {
                 placeholder="Username"
                 required
               />
-            </div>
-            <div className="input-div">
-              <span>Password</span>
+              <p>Password: (required)</p>
               <input
                 type="password"
                 value={password}
@@ -88,40 +100,179 @@ function Login() {
                 placeholder="Password"
                 required
               />
+              <a>Forgot your password?</a>
             </div>
-            <div className="input-div">
-              <button type="submit">Login</button>
+            <div className="btn">
+              <button>Sign In</button>
+              <button className="scn-btn">Clear All</button>
             </div>
-          </Form>
-        </Right>
-      </Body>
-    </Main>
+          </Left>
+          <Right>
+            <h2>Simple Secure Access</h2>
+            <p>
+              A simple way to securely access Government of Canada online
+              services.
+            </p>
+            <p>One username.</p>
+            <p style={{ marginTop: "0px" }}>One password.</p>
+            <button>Sign Up</button>
+            <p>
+              Your GCKey can be used to access multiple Government of Canada
+              online Enabled Services.
+            </p>
+          </Right>
+        </Body>
+
+        <div className="ending">
+          <div className="center">
+            <p>
+              Please select Exit to leave the GCKey service and return to the
+              Government of Canada online service.
+            </p>
+            <button>Exit</button>
+          </div>
+          <p>Date modified: 2020-09-01</p>
+        </div>
+        <Footer>
+          <div className="links">
+            <div className="content">
+              <div>
+                <p className="content-head">About</p>
+                <p>About GCKey</p>
+                <p>Enabled Services</p>
+                <p>Site Map</p>
+              </div>
+              <div>
+                <p className="content-head">Transparency</p>
+                <p>Proactive Disclosure</p>
+                <p>Terms and Conditions</p>
+                <p>Personal Information Collection Statement</p>
+              </div>
+              <div>
+                <p className="content-head">News</p>
+                <p>Recent Project Activity</p>
+              </div>
+              <div>
+                <p className="content-head">Contact Us</p>
+                <p>Phone Numbers</p>
+              </div>
+            </div>
+          </div>
+          <div className="end" />
+        </Footer>
+      </Main>
+    </Container>
   );
 }
 
 export default Login;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Main = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: grid;
-  grid-template-rows: 60px auto;
+  width: 1200px;
+
+  .lang {
+    text-align: right;
+    color: #284162;
+    text-decoration: underline;
+    margin-top: 10px;
+  }
+
+  .lang:hover {
+    color: #0535d2;
+    cursor: pointer;
+  }
+
+  .header {
+    margin-top: 30px;
+    font-size: 20px;
+    line-height: 1.5;
+
+    h1 {
+      font-size: 34px;
+    }
+  }
+
+  .navbar {
+    background-color: #335075;
+    position: absolute;
+    left: 0px;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: auto 1200px auto;
+    height: 55px;
+    place-items: center;
+
+    div {
+      color: white;
+      width: 100%;
+      place-items: center;
+    }
+
+    .menu-items {
+      display: grid;
+      grid-template-columns: 275px auto 225px;
+      width: 100%;
+      place-items: center;
+      text-align: center;
+
+      div {
+        display: grid;
+        place-items: center;
+        border-left: 1px solid white;
+        height: 55px;
+        width: 100%;
+      }
+    }
+  }
+
+  .routes {
+    margin-top: 65px;
+    display: flex;
+  }
+
+  .ending {
+    width: 100%;
+    margin-top: 25px;
+
+    .center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      width: 12em;
+      padding: 6px 12px;
+      font-size: 16px;
+      margin: 20px;
+      border: 1px solid #335075;
+      border-radius: 5px;
+      color: #335075;
+      background-color: #eaebed;
+      border-color: #dcdee1;
+    }
+
+    .scn-btn {
+    }
+  }
 `;
 
 const Nav = styled.div`
-  background-color: antiquewhite;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 0 0 5px 5px;
+  height: 80px;
 
   @media screen and (max-width: 500px) {
-    width: 100%;
-
-    .signup {
-      display: none;
-    }
-
     .nav-img {
       margin-left: 10px !important;
       margin-right: 10px !important;
@@ -131,114 +282,122 @@ const Nav = styled.div`
 
   .nav-img {
     margin-left: 25px;
-    height: 35px;
-  }
-
-  .signup {
-    font-size: 1.25rem;
-    margin-right: 25px;
-    font-weight: bold;
-    color: black;
-    text-decoration: none;
+    height: 25px;
   }
 `;
 
 const Body = styled.div`
   display: grid;
-  grid-template-columns: 50vw 50vw;
-
-  @media screen and (max-width: 600px) {
-    grid-template-columns: 100vw;
-  }
+  grid-template-columns: 70% 30%;
+  padding: 27px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 20px;
 `;
 
-const Left = styled.div`
-  background: url("https://picsum.photos/1000/1000");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: rgba(245, 248, 252, 0.25098039215686274);
-  border-right: solid 1px rgba(200, 200, 200, 0.5);
+const Left = styled.form`
+  padding-right: 27px;
+  border-right: 1px solid #ddd;
 
-  @media screen and (max-width: 600px) {
-    display: none;
+  .fields {
+    h2 {
+      font-size: 26px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 5px;
+    }
+
+    input {
+      border: 1px solid #ddd;
+      padding: 6px 12px;
+      width: 100%;
+      margin-bottom: 15px;
+      font-size: 16px;
+      outline: none;
+    }
   }
 
-  p {
-    text-align: center;
-    margin: 5%;
-    margin-top: 5vh;
-    font-size: 2rem;
-    line-height: 1.75;
-    max-width: 50vw;
-    font-weight: bold;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.25);
-    border-radius: 10px;
-  }
-`;
+  .btn {
+    display: flex;
+    width: fit-content;
+    margin: 25px auto;
 
-const Right = styled.div`
-  display: grid;
-  place-content: center;
-  background: linear-gradient(to top, #a1ffce, #faffd1);
+    button {
+      background-color: #335075;
+      width: 12em;
+      color: white;
+      padding: 6px 12px;
+      font-size: 16px;
+      margin: 5px;
+      border: 1px solid #335075;
+      border-radius: 5px;
+    }
 
-  @media screen and (max-width: 600px) {
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-
-    .input-div {
-      width: 90vw !important;
+    .scn-btn {
+      color: #335075;
+      background-color: #eaebed;
+      border-color: #dcdee1;
     }
   }
 `;
 
-const Form = styled.form`
-  h2 {
-    text-align: center;
-    margin-bottom: 40px;
-  }
+const Right = styled.div`
+  padding-left: 27px;
 
   p {
-    text-align: center;
-    font-family: monospace;
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
-    margin: 15px 0;
-    margin-bottom: 25px;
-    border-radius: 5px;
-  }
-
-  .input-div {
-    display: flex;
-    flex-direction: column;
-    width: 35vw;
-    max-width: 400px;
-    margin-bottom: 25px;
-  }
-
-  span {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-
-  input {
-    padding: 10px;
-    font-size: 1.25rem;
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #a0a0a0;
+    margin-top: 10px;
   }
 
   button {
-    font-size: 1.15rem;
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #418af2;
-    background-color: #418af2;
+    background-color: #335075;
+    width: 12em;
     color: white;
+    padding: 6px 12px;
+    font-size: 16px;
+    border: 1px solid #335075;
+    border-radius: 5px;
+    margin: 20px auto;
+  }
+`;
+
+const Footer = styled.div`
+  margin-top: 25px;
+
+  .links {
+    background-color: #e1e4e7;
+    width: 100vw;
+    position: absolute;
+    left: 0px;
+    border-bottom: 4px solid #335175;
+  }
+
+  .content {
+    width: 1200px;
+    margin: 25px auto;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+
+    .content-head {
+      font-weight: bolder;
+      font-size: 18px;
+    }
+
+    div {
+      width: 100%;
+
+      p {
+        margin: 10px 0;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .end {
+    height: 100px;
+    width: 100vw;
+    background: url("https://www.canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg");
   }
 `;

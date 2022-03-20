@@ -80,13 +80,13 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 DATABASES = {
     # # For Heroku Postgress
-    'default': dj_database_url.config()
+    # 'default': dj_database_url.config()
 
     # For localhost sqlite
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 #PASSWORD name123 USERNAME admin

@@ -12,9 +12,11 @@ app.use(cors());
 
 const postsRoute = require("./routes/posts");
 const authRoute = require("./routes/auth");
+const mailRoute = require("./routes/mail");
 
 app.use("/posts", postsRoute);
 app.use("/auth", authRoute);
+app.use("/mail", mailRoute);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Running" });

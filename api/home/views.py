@@ -266,7 +266,7 @@ def sendemail(request):
 
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
 
-            msg = f'Subject: {Subject}\n\n{Message}<br><br><b>From:</b> {From}'
+            msg = f'Subject: {Subject}\n\n{Message}\n\nFrom: {From}'
 
             smtp.sendmail(EMAIL_ADDRESS, To, msg)
 

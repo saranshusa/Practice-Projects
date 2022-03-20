@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
+import Track from "./pages/Track";
 import Dashboard from "./pages/Dashboard";
 // import Signup from "./pages/Signup";
 import AdminLogin from "./pages/AdminLogin";
@@ -15,6 +17,8 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/track" element={<Track />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="login" element={<Login />} />

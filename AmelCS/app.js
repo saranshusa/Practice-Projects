@@ -10,6 +10,7 @@ const generator = require("generate-password");
 
 const Auth = require("./models/Auth");
 const UserAuth = require("./models/UserAuth");
+const Applications = require("./models/Applications");
 
 const PORT = process.env.PORT;
 
@@ -64,35 +65,33 @@ app.post("/adminlogin", async (req, res) => {
 
 // USER SIGNUP
 app.post("/signup", async (req, res) => {
-  const ifUserExists = await UserAuth.findOne({ email: req.body.email });
+  const ifUserExists = await UserAuth.findOne({ username: req.body.username });
   if (ifUserExists != null) {
-    return res.status(400).json({ message: "Email already registered!" });
+    return res.status(400).json({ message: "Username already registered!" });
   }
 
-  const username = genUsername.generateUsername();
+  // const username = genUsername.generateUsername();
 
-  // Check for username duplicacy
-  const ifUsernameExists = await UserAuth.findOne({ username: username });
-  if (ifUsernameExists != null) {
-    const username = genUsername.generateUsername();
-  }
-  var password = generator.generate({
-    length: 10,
-    numbers: true,
-  });
+  // // Check for username duplicacy
+  // const ifUsernameExists = await UserAuth.findOne({ username: username });
+  // if (ifUsernameExists != null) {
+  //   const username = genUsername.generateUsername();
+  // }
+  // var password = generator.generate({
+  //   length: 10,
+  //   numbers: true,
+  // });
 
   const User = new UserAuth({
-    email: req.body.email,
-    username: username,
-    password: password,
+    username: req.body.username,
+    password: req.body.password,
   });
 
   User.save()
     .then(
       res.status(201).json({
         message: "Account created successfully!",
-        username: username,
-        password: password,
+        username: req.body.username,
       })
     )
     .catch((err) => {
@@ -121,7 +120,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// POST DATA
+// POST LINKS
 app.post("/data", async (req, res) => {
   const User = await UserAuth.findOne({ username: req.body.username });
   if (User == null) {
@@ -137,8 +136,8 @@ app.post("/data", async (req, res) => {
   }
 });
 
-// GET DATA
-app.get("/data/:username", async (req, res) => {
+// GET LINKS
+app.get("/links/:username", async (req, res) => {
   const User = await UserAuth.findOne({ username: req.params.username });
   if (User == null) {
     return res.status(400).json({ message: "User not found!" });
@@ -150,11 +149,101 @@ app.get("/data/:username", async (req, res) => {
   }
 });
 
-// TEST
-app.get("/test", async (req, res) => {
-  await UserAuth.remove({});
-  res.status(200).json({ message: "Success!" });
+// GET DATA
+app.get("/get", async (req, res) => {
+  const User = await UserAuth.findOne({ pnumber: req.query.pn });
+  if (User == null) {
+    return res.status(400).json({ message: "User not found!" });
+  }
+  try {
+    const data = {
+      ...User["_doc"],
+      password: null,
+      _id: null,
+      username: null,
+      timestamp: null,
+    };
+    res.status(200).json({ data });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
 });
+
+// VALIDATE USER
+app.get("/validate/:username", async (req, res) => {
+  const User = await UserAuth.findOne({ username: req.params.username });
+  if (User == null) {
+    return res.status(400).json({ message: "User not found!" });
+  }
+  try {
+    res.status(200).json({ data: null });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// POST APPLICATION
+app.post("/application", async (req, res) => {
+  const User = await UserAuth.findOne({ username: req.body.username });
+  if (User == null) {
+    return res.status(400).json({ message: "User not found!" });
+  }
+  try {
+    const Application = new Applications({
+      username: req.body.username,
+      atype: req.body.atype,
+      anumber: req.body.anumber,
+      aname: req.body.aname,
+      datesubmit: req.body.datesubmit,
+      currentstatus: req.body.currentstatus,
+      messages: req.body.messages,
+      action: req.body.action,
+      uci: req.body.uci,
+      bnumber: req.body.bnumber,
+      dobenroll: req.body.dobenroll,
+      edate: req.body.edate,
+      msg1: req.body.msg1,
+      msg2: req.body.msg2,
+      msg3: req.body.msg3,
+      msg4: req.body.msg4,
+    });
+
+    Application.save()
+      .then(
+        res.status(201).json({
+          message: "Application added successfully!",
+        })
+      )
+      .catch((err) => {
+        res.status(500).json({
+          message: err,
+        });
+      });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// VALIDATE USER
+app.get("/application/:username", async (req, res) => {
+  const Application = await Applications.find({
+    username: req.params.username,
+  });
+  if (Application == null) {
+    return res.status(400).json({ message: "No applications found!" });
+  }
+  try {
+    res.status(200).json({ data: Application });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// TEST
+// app.get("/test", async (req, res) => {
+//   await UserAuth.remove({});
+//   res.status(200).json({ message: "Success!" });
+// });
 
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
   console.log("Database connected...");

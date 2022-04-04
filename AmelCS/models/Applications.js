@@ -1,62 +1,81 @@
 const mongoose = require("mongoose");
 
-const AuthSchema = mongoose.Schema({
+const ApplicationsSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
   },
-  password: {
+  atype: {
     type: String,
-    required: true,
+    required: false,
+    default: "",
   },
-  data: {
+  anumber: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  aname: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  datesubmit: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  currentstatus: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  messages: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  action: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  uci: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  bnumber: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  dobenroll: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  edate: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  msg1: {
     type: Array,
     required: false,
   },
-  name: {
-    type: String,
+  msg2: {
+    type: Array,
     required: false,
-    default: "",
   },
-  pnumber: {
-    type: String,
+  msg3: {
+    type: Array,
     required: false,
-    default: "",
   },
-  nationality: {
-    type: String,
+  msg4: {
+    type: Array,
     required: false,
-    default: "",
-  },
-  astatus: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  ped: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  sfn: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  dob: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  sapplication: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
   },
 });
 
-module.exports = mongoose.model("AmelcsCanadaUserAuth", AuthSchema);
+module.exports = mongoose.model("Applications", ApplicationsSchema);

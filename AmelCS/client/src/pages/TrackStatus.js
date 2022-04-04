@@ -4,35 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import countryList from "../components/CountryData";
 
-const Home = () => {
-  const navigate = useNavigate();
-  const [SFN, setSFN] = useState("");
-  const [PN, setPN] = useState("");
-  const [Country, setCountry] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  function HandleSubmit(e) {
-    e.preventDefault();
-    axios
-      .get("https://amelcs.herokuapp.com/get", {
-        params: {
-          sfn: SFN,
-          pn: PN,
-          country: Country,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          sessionStorage.setItem("userId", res.data["username"]);
-          navigate("/dashboard");
-        }
-      })
-      .catch((error) => {
-        setErrorMsg(error.response.data["message"]);
-        alert(error.response.data["message"]);
-      });
-  }
-
+const TrackStatus = ({ DATA }) => {
   return (
     <Container>
       <Main>
@@ -55,73 +27,40 @@ const Home = () => {
         <Body>
           <Form>
             <h2>Track LMIA Status</h2>
-            <p>You can track your Visa by entering credential detail.</p>
-            <table style={{ width: "100%" }}>
-              <tr
-                style={{
-                  backgroundColor: "#ff3369",
-                }}
-              >
-                <td
-                  colSpan="2"
-                  style={{
-                    backgroundColor: "#ff3369",
-                    padding: "10px",
-                    color: "white",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Visa Status Enquiry
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="2" style={{ borderRight: "1px solid #eeeeee" }}>
-                  Please complete the following details to view your visa
-                  entitlements.<span>* must be required.</span>
-                </td>
-              </tr>
-              <tr>
-                <td>Enter your System File Number</td>
-                <td style={{ borderRight: "1px solid #eeeeee" }}>
-                  <input
-                    type="text"
-                    placeholder="UCI Number"
-                    value={SFN}
-                    onChange={(e) => setSFN(e.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Passport Number</td>
-                <td style={{ borderRight: "1px solid #eeeeee" }}>
-                  <input
-                    type="text"
-                    placeholder="Passport Number"
-                    value={PN}
-                    onChange={(e) => setPN(e.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Country of Passport</td>
-                <td style={{ borderRight: "1px solid #eeeeee" }}>
-                  <select
-                    value={Country}
-                    onChange={(e) => setCountry(e.target.value)}
-                  >
-                    {countryList.map((country, index) => (
-                      <option key={index}>{country}</option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td style={{ borderRight: "1px solid #eeeeee" }}>
-                  <button onClick={HandleSubmit}>Submit</button>
-                </td>
-              </tr>
-            </table>
+            <div className="details">
+              <div className="row">
+                <p>Name:</p>
+                <p className="data">{DATA.Name}</p>
+              </div>
+              <div className="row">
+                <p>Passport Number:</p>
+                <p className="data">{DATA.PNumber}</p>
+              </div>
+              <div className="row">
+                <p>Nationality:</p>
+                <p className="data">{DATA.Nationality}</p>
+              </div>
+              <div className="row">
+                <p>System File Number:</p>
+                <p className="data">{DATA.SFN}</p>
+              </div>
+              <div className="row">
+                <p>Application status:</p>
+                <p className="data">{DATA.AStatus}</p>
+              </div>
+              <div className="row">
+                <p>Passport Expiry Date:</p>
+                <p className="data">{DATA.PED}</p>
+              </div>
+              <div className="row">
+                <p>Date of Birth:</p>
+                <p className="data">{DATA.DOB}</p>
+              </div>
+              <div className="row">
+                <p>Application:</p>
+                <p className="data">{DATA.sApplication}</p>
+              </div>
+            </div>
           </Form>
         </Body>
 
@@ -147,7 +86,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default TrackStatus;
 
 const Container = styled.div`
   display: flex;
@@ -259,7 +198,7 @@ const Body = styled.div`
   margin-bottom: 100px;
 `;
 
-const Form = styled.form`
+const Form = styled.div`
   box-shadow: 0px 15px 60px rgb(62 62 62 / 10%) !important;
   border-radius: 12px !important;
   padding: 3rem !important;
@@ -278,29 +217,5 @@ const Form = styled.form`
     font-size: 16px;
     line-height: 26px;
     margin-bottom: 1rem;
-  }
-
-  td {
-    border-bottom: 1px solid #eeeeee;
-    border-left: 1px solid #eeeeee;
-    padding: 20px;
-    color: #333;
-  }
-
-  input,
-  select {
-    font-weight: 400;
-    color: #333;
-    font-size: 16px;
-    padding: 10px;
-    width: 100%;
-  }
-
-  button {
-    background-color: #ff3369;
-    color: #fff;
-    font-weight: bold;
-    height: 30px;
-    width: 100px;
   }
 `;

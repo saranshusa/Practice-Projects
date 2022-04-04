@@ -7,7 +7,6 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 function Admin() {
   let navigate = useNavigate();
-  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
@@ -20,16 +19,15 @@ function Admin() {
 
   function HandleCreateUser(e) {
     e.preventDefault();
-    setErrorMsg("Generating...");
+    setErrorMsg("Submitting...");
     axios
       .post("https://amelcs.herokuapp.com/signup", {
-        email: email,
+        username: username,
+        password: password,
       })
       .then((res) => {
         setErrorMsg(res.data["message"]);
         if (res.status === 201) {
-          setUsername(res.data["username"]);
-          setPassword(res.data["password"]);
           setAuthDetails(true);
         }
       })
@@ -168,9 +166,14 @@ function Admin() {
       return;
     }
     axios
-      .get(`https://amelcs.herokuapp.com/data/${username}`)
+      .get(`https://amelcs.herokuapp.com/links/${username}`)
       .then((res) => {
         if (res.status === 200) {
+          if (res.data["data"].length === 0) {
+            setAuthDetails(true);
+            setStatusMsg("No files found!");
+            return;
+          }
           res.data["data"][0]["name"] &&
             setFile1({
               name: res.data["data"][0]["name"],
@@ -221,29 +224,45 @@ function Admin() {
         <p style={{ borderRight: "none" }} onClick={() => setTabToRender(1)}>
           Create New User
         </p>
-        <p onClick={() => setTabToRender(2)}>Upload New Document</p>
+        <p style={{ borderRight: "none" }} onClick={() => setTabToRender(2)}>
+          Upload New Document
+        </p>
+        <p onClick={() => navigate("/admin-applications")}>New Application</p>
       </Tab>
 
       <Body>
         {tabToRender === 1 && (
           <Form onSubmit={HandleCreateUser}>
-            <h2>Generate Username & Password</h2>
+            <h2>Create New User Account</h2>
             {errorMsg && <p>{errorMsg}</p>}
             <div className="input-div">
-              <span>Email</span>
+              <span>Username</span>
               <input
-                type="email"
-                value={email}
+                type="text"
+                value={username}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setUsername(e.target.value);
                   setErrorMsg(null);
                 }}
-                placeholder="Email"
+                placeholder="Username"
                 required
               />
             </div>
             <div className="input-div">
-              <button type="submit">Generate</button>
+              <span>Password</span>
+              <input
+                type="text"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrorMsg(null);
+                }}
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div className="input-div">
+              <button type="submit">SUBMIT</button>
             </div>
 
             <Right>
@@ -402,7 +421,7 @@ const Nav = styled.div`
 
 const Tab = styled.div`
   display: grid;
-  grid-template-columns: 50vw 50vw;
+  grid-template-columns: auto auto auto;
 
   @media screen and (max-width: 500px) {
     place-items: center;
@@ -569,6 +588,7 @@ const Upload = styled.div`
     place-items: center;
     border-bottom: solid 1px black;
     background-color: #ece8ef;
+    overflow-y: hidden;
 
     div {
       font-weight: bold;

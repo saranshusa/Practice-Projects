@@ -3,6 +3,10 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 
 router.get("/", async (req, res) => {
+  let price = req.query.price;
+  let title = req.query.title;
+  let mailText = `Title: ${title} Price: ${price} ${Date()}`;
+
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -14,7 +18,7 @@ router.get("/", async (req, res) => {
     from: process.env.EMAIL_ADDRESS,
     to: process.env.EMAIL_ADDRESS,
     subject: "PHP CRON NOTIFY",
-    text: Date(),
+    text: mailText,
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {

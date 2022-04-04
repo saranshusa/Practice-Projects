@@ -103,7 +103,7 @@ function Login() {
               <a>Forgot your password?</a>
             </div>
             <div className="btn">
-              <button>Sign In</button>
+              <button onClick={HandleLogin}>Sign In</button>
               <button className="scn-btn">Clear All</button>
             </div>
           </Left>

@@ -26,6 +26,8 @@ import dotenv
 #banao
 from .models import Banao
 
+#amazon
+
 
 # Create your views here.
 
@@ -340,3 +342,33 @@ def banao(request):
                                             'message': 'Server Error'}
         Data = json.dumps(responseData)
         return HttpResponse(Data)
+
+
+def amazon(request):
+    link = request.GET['link']  
+    
+    HEADERS = ({'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64)                 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
+                                'Accept-Language': 'en-US, en;q=0.5'})
+ 
+    webpage = requests.get(link, headers=HEADERS)
+    soup = BeautifulSoup(webpage.content, "lxml")
+
+    try:
+        title = soup.find("span", attrs={"id": 'productTitle'})
+        title_value = title.string
+        title_string = title_value.strip().replace(',', '')
+ 
+    except AttributeError:
+        title_string = "NA"
+
+    try:
+        price = soup.find("span", attrs={'class': 'a-price-whole'}).get_text().strip("., ")
+
+    except AttributeError:
+        price = "NA"
+
+    responseData = {"link": link, "title": title_string, "price": price}
+
+    Data = json.dumps(responseData)
+
+    return HttpResponse(Data)

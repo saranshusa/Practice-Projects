@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Home = () => {
+  let navigate = useNavigate();
+
   return (
     <Container>
       <Main>
@@ -15,10 +17,10 @@ const Home = () => {
             />
             <div>
               <a>Home</a>
-              <a>Services</a>
-              <a>Employer</a>
-              <a>Visa Verification</a>
-              <button>Track_LMIA</button>
+              <a onClick={() => navigate("/services")}>Services</a>
+              <a onClick={() => navigate("/employer")}>Employer</a>
+              <a onClick={() => navigate("/track")}>Visa Verification</a>
+              <button onClick={() => navigate("/track")}>Track_LMIA</button>
             </div>
           </Nav>
         </div>

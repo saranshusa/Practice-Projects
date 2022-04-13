@@ -6,6 +6,7 @@ function Terms() {
   let navigate = useNavigate();
   const [phone, setPhone] = useState("");
   const [tabs, setTabs] = useState(1);
+  const [q, setQ] = useState(0);
 
   function CheckAuth() {
     const userId = sessionStorage.getItem("userId");
@@ -21,12 +22,21 @@ function Terms() {
 
   function handleVerification() {
     sessionStorage.setItem("isValidated", "true");
-    if (phone === "1234567890") navigate("/application");
-    else alert("Inccorrect answer!");
+    if (q === 1 && phone === "67890") {
+      navigate("/application");
+      return;
+    } else alert("Wrong answer!");
+    // if (q === 2 && phone === "HarryPotter") navigate("/application");
+    if (q === 2 && phone === "BMW") {
+      navigate("/application");
+      return;
+    } else alert("Wrong answer!");
+    // if (q === 3 && phone === "Canada") navigate("/application");
   }
 
   useEffect(() => {
     CheckAuth();
+    setQ(Math.floor(Math.random() * (2 - 1 + 1)) + 1);
   }, []);
 
   return (
@@ -141,10 +151,30 @@ function Terms() {
               access your account.
             </p>
             <p>Please answer the following secret question:</p>
-            <p style={{ fontWeight: "bold", marginTop: "15px" }}>
-              * "My Phone number"
-              <span style={{ color: "red" }}> (required)</span>
-            </p>
+            {q === 1 && (
+              <p style={{ fontWeight: "bold", marginTop: "15px" }}>
+                * "My Phone number"
+                <span style={{ color: "red" }}> (required)</span>
+              </p>
+            )}
+            {/* {q === 2 && (
+              <p style={{ fontWeight: "bold", marginTop: "15px" }}>
+                * "My Favorite Book Name"
+                <span style={{ color: "red" }}> (required)</span>
+              </p>
+            )} */}
+            {q === 2 && (
+              <p style={{ fontWeight: "bold", marginTop: "15px" }}>
+                * "My Favorite Car"
+                <span style={{ color: "red" }}> (required)</span>
+              </p>
+            )}
+            {/* {q === 4 && (
+              <p style={{ fontWeight: "bold", marginTop: "15px" }}>
+                * "Where I Want Travel"
+                <span style={{ color: "red" }}> (required)</span>
+              </p>
+            )} */}
             <input
               type="text"
               value={phone}
@@ -166,27 +196,50 @@ function Terms() {
           <div className="links">
             <div className="content">
               <div>
-                <p className="content-head">About</p>
-                <p>About GCKey</p>
-                <p>Enabled Services</p>
-                <p>Site Map</p>
+                <p className="content-head">Contact information</p>
+                <p>Enquiries</p>
+                <p>Help Centre</p>
+                <p>IRCC offices</p>
+                <p>Media contacts</p>
+                <p className="content-head">News</p>
+                <p>Newsroom</p>
+                <p>News releases</p>
+                <p>Media advisories</p>
+                <p>Speeches</p>
+                <p>Statements</p>
+              </div>
+              <div>
+                <p className="content-head">Government</p>
+                <p>How government works</p>
+                <p>Departments and agencies</p>
+                <p>Prime Minister</p>
+                <p>Ministers</p>
+                <p>Public service and military</p>
+                <p>Treaties, laws and regulations</p>
+                <p>Libraries</p>
+                <p>Publications</p>
+                <p>Statistics and data</p>
+                <p>About Canada.ca</p>
               </div>
               <div>
                 <p className="content-head">Transparency</p>
-                <p>Proactive Disclosure</p>
-                <p>Terms and Conditions</p>
-                <p>Personal Information Collection Statement</p>
+                <p>Government-wide reporting</p>
+                <p>Open government</p>
+                <p>Proactive disclosure</p>
+                <p>Terms and conditions</p>
+                <p>Privacy</p>
               </div>
               <div>
-                <p className="content-head">News</p>
-                <p>Recent Project Activity</p>
-              </div>
-              <div>
-                <p className="content-head">Contact Us</p>
-                <p>Phone Numbers</p>
+                <p className="content-head">Feedback</p>
+                <img src="data:image/webp;base64,UklGRhYCAABXRUJQVlA4TAoCAAAveoALEEegqJEkNbh88GQ+R6emkSQ0d92DBYb61TaS1Abff+iBPpn/AID/v5JIFt49Z64VR7cW1UGutr1tW+F5rLYCki8AsJ2scUkZxfRR6RmZnlGnnzE9uW+LIJk2R/R/AuC73/77/6b+9/qW696KOKezqf9GqrBb042rGG3JRKJmJjS5ww4RkS8irLKEpF+OEYoIYRKukrCmq0aZp3E+115vbR5e5SrLgSTrqKSbegBgZ4SIuPFHU4eiZK5hhxgAO0SZx/GzYinY49yqQrJ2iNJN48y1JlH64qakZnHT/vu4KzXnjUYweRdWtHtW1OZdNKwxbanizMHvZXyno18OiVFHEPPBpHgHjcq0HpS+A+tBHsk7aElzZtmj9w6gUtCv+gMsaNIl8fz5vsZ534MeuzjGXak4uyt9el0So2EXpjX7JO9gUZy0DyPxSbs4RiXCJCI0zhrxzrskghXhy21CnDzDIvsYiLfGeAFwe3SVA9Q+9NPBEfq0Du6WfNKupWBP0JLJFLDAOgPdTbAU6nEG2oZU9OiwGIgzWHgC/Yg1pnBAFcgAXIGnLdlF5+BewyD0CAFPS+wglj3F3RADCvVCwOmAEBEnl5VRgJ1NvQdM50GgPdrc3DzMYJczBdz9874pZS/MfAEAd1WiCbnK4zxYZ3Mepy0xjQPHceCUziPdRYKTaREnfvvBvr8=" />
+                <p className="content-head">Social media</p>
+                <img src="data:image/webp;base64,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" />
+                <p className="content-head">Mobile centre</p>
+                <img src="data:image/webp;base64,UklGRp4BAABXRUJQVlA4TJEBAAAveoALEEegpo0kN3hdrvPdE3o1bSS50WsjgXz3/92rbdvITV6+a+P/r/nzHwDg/x9R+ZT3nrDUucKKaYCc27beqLkEhfb7NIT2XbEkypG+YTFlDiUZymS7JtPKJv5vfRolpzKi/xOAv/psNulNxmZy4gF7Jt8zxrwBuJzUe+LlLrWyr2Oglkx8ZDuqXjnKDcRYw1fEqSnWLgbCmpWTO3yxxq+I3l4KPzdcbDI1lYc5/ZC7grX7ishB8YaLjn74qnwhJHm1VL9UFupXVD6wDP/F2DL5hxNp1/egVUPErTrCbsviv7j9Et3G9W2HP6xR42KbkMdTUjdsuIx2LqVxyXPHRurHczaOFJshU0OmTdO0JcYaNo0Fw4m184q4FXewbr8i+k8TjyfFQXN+LqOUUslMKaXERae+w9wd/K8sy7ZeEZHkLwQk6WJDH59WvkeS+h7AgRhr8Io4d5+RpHbRF6rKxeIAuA2U3UFXSCY9oWbi4zZQFFarKVR66APAnEzTkMdAtsMwJFMaPgC4MPWOXfzVAwA=" />
               </div>
             </div>
           </div>
+          <div style={{ height: "410px" }}></div>
           <div className="end" />
         </Footer>
       </Main>
@@ -333,6 +386,16 @@ const Body = styled.div`
 const Footer = styled.div`
   margin-top: 25px;
 
+  .end {
+    height: 40px;
+    margin-bottom: 20px;
+    width: 100vw;
+    background: url("https://www.canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg");
+    /* background-size: contain; */
+    background-repeat: no-repeat;
+    background-position-x: 70%;
+  }
+
   .links {
     background-color: #e1e4e7;
     width: 100vw;
@@ -360,11 +423,5 @@ const Footer = styled.div`
         font-size: 14px;
       }
     }
-  }
-
-  .end {
-    height: 100px;
-    width: 100vw;
-    background: url("https://www.canada.ca/etc/designs/canada/wet-boew/assets/wmms-blk.svg");
   }
 `;

@@ -22,10 +22,13 @@ function Login() {
         if (res.status === 200) {
           sessionStorage.setItem("userId", res.data["username"]);
           navigate("/dashboard");
+        } else {
+          alert(res.data["message"]);
         }
       })
       .catch((error) => {
         setErrorMsg(error.response.data["message"]);
+        alert(error.response.data["message"]);
       });
   }
 

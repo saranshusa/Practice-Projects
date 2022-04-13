@@ -8,7 +8,9 @@ function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
+  const [changePassword, setChangePassword] = useState(false);
 
   function HandleLogin(e) {
     e.preventDefault();
@@ -23,6 +25,26 @@ function Login() {
         if (res.status === 200) {
           sessionStorage.setItem("adminId", res.data["id"]);
           navigate("/admin");
+        }
+      })
+      .catch((error) => {
+        setErrorMsg(error.response.data["message"]);
+      });
+  }
+
+  function HandleChangePassword(e) {
+    e.preventDefault();
+    setErrorMsg("Authenticating...");
+    axios
+      .post("https://amelcs.herokuapp.com/adminchangepassword", {
+        email: email,
+        password: password,
+        newPassword: newPassword,
+      })
+      .then((res) => {
+        setErrorMsg(res.data["message"]);
+        if (res.status === 201) {
+          alert("Password Changed!");
         }
       })
       .catch((error) => {
@@ -52,39 +74,112 @@ function Login() {
       <Body>
         <Left />
         <Right>
-          <Form onSubmit={HandleLogin}>
-            <h2>Admin Login</h2>
-            {errorMsg && <p>{errorMsg}</p>}
-            <div className="input-div">
-              <span>Email</span>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setErrorMsg(null);
-                }}
-                placeholder="Email"
-                required
-              />
-            </div>
-            <div className="input-div">
-              <span>Password</span>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setErrorMsg(null);
-                }}
-                placeholder="Password"
-                required
-              />
-            </div>
-            <div className="input-div">
-              <button type="submit">Login</button>
-            </div>
-          </Form>
+          {!changePassword && (
+            <Form onSubmit={HandleLogin}>
+              <h2>Admin Login</h2>
+              {errorMsg && <p>{errorMsg}</p>}
+              <div className="input-div">
+                <span>Email</span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setErrorMsg(null);
+                  }}
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div className="input-div">
+                <span>Password</span>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setErrorMsg(null);
+                  }}
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div className="input-div">
+                <button type="submit">Login</button>
+                <strong
+                  onClick={() => setChangePassword(true)}
+                  style={{
+                    marginTop: "20px",
+                    cursor: "pointer",
+                    textAlign: "center",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Change Password
+                </strong>
+              </div>
+            </Form>
+          )}
+
+          {changePassword && (
+            <Form onSubmit={HandleChangePassword}>
+              <h2>Change Password</h2>
+              {errorMsg && <p>{errorMsg}</p>}
+              <div className="input-div">
+                <span>Email</span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setErrorMsg(null);
+                  }}
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div className="input-div">
+                <span>Current Password</span>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setErrorMsg(null);
+                  }}
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div className="input-div">
+                <span>New Password</span>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                    setErrorMsg(null);
+                  }}
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div className="input-div">
+                <button type="submit">Change Password</button>
+                <strong
+                  onClick={() => setChangePassword(false)}
+                  style={{
+                    marginTop: "20px",
+                    cursor: "pointer",
+                    textAlign: "center",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Back to Login
+                </strong>
+              </div>
+            </Form>
+          )}
         </Right>
       </Body>
     </Main>

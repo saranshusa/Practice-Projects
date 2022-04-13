@@ -13,6 +13,7 @@ function Admin() {
   const [statusMsg, setStatusMsg] = useState(null);
   const [tabToRender, setTabToRender] = useState(1);
   const [authDetails, setAuthDetails] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [file1, setFile1] = useState({});
   const [file2, setFile2] = useState({});
   const [file3, setFile3] = useState({});
@@ -27,12 +28,18 @@ function Admin() {
       })
       .then((res) => {
         setErrorMsg(res.data["message"]);
+        setTimeout(() => {
+          setShowPopup(true);
+        }, 2000);
         if (res.status === 201) {
           setAuthDetails(true);
         }
       })
       .catch((error) => {
         setErrorMsg(error.response.data["message"]);
+        setTimeout(() => {
+          setShowPopup(true);
+        }, 2000);
       });
   }
 
@@ -370,6 +377,11 @@ function Admin() {
           </Upload>
         )}
       </Body>
+      {showPopup && (
+        <p onClick={() => setShowPopup(false)} className="popup">
+          {errorMsg}
+        </p>
+      )}
     </Main>
   );
 }
@@ -381,6 +393,23 @@ const Main = styled.div`
   width: 100vw;
   display: grid;
   grid-template-rows: 60px 50px auto;
+
+  .popup {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    z-index: 10;
+    background-color: whitesmoke;
+    height: 75vh;
+    width: 80vw;
+    display: grid;
+    place-items: center;
+    font-weight: bolder;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    border: 3px solid #444;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const Nav = styled.div`

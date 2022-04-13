@@ -4,7 +4,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import countryList from "../components/CountryData";
 
-const TrackStatus = ({ DATA }) => {
+const TrackStatus = () => {
+  const [DATA, setData] = useState();
+
+  useEffect(() => {
+    const Data = JSON.parse(sessionStorage.getItem("trackData"));
+    setData(Data);
+  }, []);
+
+  console.log(DATA);
+
   return (
     <Container>
       <Main>
@@ -27,40 +36,42 @@ const TrackStatus = ({ DATA }) => {
         <Body>
           <Form>
             <h2>Track LMIA Status</h2>
-            <div className="details">
-              <div className="row">
-                <p>Name:</p>
-                <p className="data">{DATA.Name}</p>
+            {DATA && (
+              <div className="details">
+                <div className="row">
+                  <p>Name:</p>
+                  <p className="data">{DATA.aname}</p>
+                </div>
+                <div className="row">
+                  <p>Passport Number:</p>
+                  {/* <p className="data">{DATA.PNumber}</p> */}
+                </div>
+                <div className="row">
+                  <p>Nationality:</p>
+                  {/* <p className="data">{DATA.Nationality}</p> */}
+                </div>
+                <div className="row">
+                  <p>System File Number:</p>
+                  <p className="data">{DATA.uci}</p>
+                </div>
+                <div className="row">
+                  <p>Application status:</p>
+                  <p className="data">{DATA.currentstatus}</p>
+                </div>
+                <div className="row">
+                  <p>Passport Expiry Date:</p>
+                  {/* <p className="data">{DATA.PED}</p> */}
+                </div>
+                <div className="row">
+                  <p>Date of Birth:</p>
+                  {/* <p className="data">{DATA.DOB}</p> */}
+                </div>
+                <div className="row" style={{ borderBottom: "1px solid #ddd" }}>
+                  <p>Application:</p>
+                  <p className="data">{DATA.anumber}</p>
+                </div>
               </div>
-              <div className="row">
-                <p>Passport Number:</p>
-                <p className="data">{DATA.PNumber}</p>
-              </div>
-              <div className="row">
-                <p>Nationality:</p>
-                <p className="data">{DATA.Nationality}</p>
-              </div>
-              <div className="row">
-                <p>System File Number:</p>
-                <p className="data">{DATA.SFN}</p>
-              </div>
-              <div className="row">
-                <p>Application status:</p>
-                <p className="data">{DATA.AStatus}</p>
-              </div>
-              <div className="row">
-                <p>Passport Expiry Date:</p>
-                <p className="data">{DATA.PED}</p>
-              </div>
-              <div className="row">
-                <p>Date of Birth:</p>
-                <p className="data">{DATA.DOB}</p>
-              </div>
-              <div className="row">
-                <p>Application:</p>
-                <p className="data">{DATA.sApplication}</p>
-              </div>
-            </div>
+            )}
           </Form>
         </Body>
 
@@ -212,10 +223,22 @@ const Form = styled.div`
   }
 
   p {
-    font-weight: 400;
+    font-weight: 700;
     color: #333;
     font-size: 16px;
     line-height: 26px;
-    margin-bottom: 1rem;
+    padding: 10px;
+    width: 200px;
+  }
+
+  .row {
+    border: #ddd 1px solid;
+    display: flex;
+    border-bottom: none;
+  }
+
+  .data {
+    border-left: #ddd 1px solid;
+    font-weight: normal;
   }
 `;

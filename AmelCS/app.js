@@ -22,29 +22,29 @@ app.get("/", (req, res) => {
 });
 
 // ADMIN SIGNUP
-app.post("/adminsignup", async (req, res) => {
-  const ifUserExists = await Auth.findOne({ email: req.body.email });
-  if (ifUserExists != null) {
-    return res.status(400).json({ message: "Email already registered!" });
-  }
-  const hashedPass = await bcrypt.hash(req.body.password, 10);
-  const User = new Auth({
-    email: req.body.email,
-    password: hashedPass,
-  });
+// app.post("/adminsignup", async (req, res) => {
+//   const ifUserExists = await Auth.findOne({ email: req.body.email });
+//   if (ifUserExists != null) {
+//     return res.status(400).json({ message: "Email already registered!" });
+//   }
+//   const hashedPass = await bcrypt.hash(req.body.password, 10);
+//   const User = new Auth({
+//     email: req.body.email,
+//     password: hashedPass,
+//   });
 
-  User.save()
-    .then(
-      res
-        .status(201)
-        .json({ message: "Account created successfully!", id: User._id })
-    )
-    .catch((err) => {
-      res.status(500).json({
-        message: err,
-      });
-    });
-});
+//   User.save()
+//     .then(
+//       res
+//         .status(201)
+//         .json({ message: "Account created successfully!", id: User._id })
+//     )
+//     .catch((err) => {
+//       res.status(500).json({
+//         message: err,
+//       });
+//     });
+// });
 
 // ADMIN LOGIN
 app.post("/adminlogin", async (req, res) => {
@@ -55,6 +55,27 @@ app.post("/adminlogin", async (req, res) => {
   try {
     if (await bcrypt.compare(req.body.password, User.password)) {
       res.status(200).json({ message: "Login success!", id: User._id });
+    } else {
+      res.status(401).json({ message: "Incorrect credentials!" });
+    }
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// ADMIN CHANGE PASSWORD
+app.post("/adminchangepassword", async (req, res) => {
+  const User = await Auth.findOne({ email: req.body.email });
+  if (User == null) {
+    return res.status(400).json({ message: "Email not registered!" });
+  }
+  try {
+    if (await bcrypt.compare(req.body.password, User.password)) {
+      const hashedPass = await bcrypt.hash(req.body.newPassword, 10);
+      await Auth.updateOne(
+        { email: req.body.email },
+        { $set: { password: hashedPass } }
+      ).then(res.status(201).json({ message: "Password Changed!" }));
     } else {
       res.status(401).json({ message: "Incorrect credentials!" });
     }
@@ -150,24 +171,24 @@ app.get("/links/:username", async (req, res) => {
 });
 
 // GET DATA
-app.get("/get", async (req, res) => {
-  const User = await UserAuth.findOne({ pnumber: req.query.pn });
-  if (User == null) {
-    return res.status(400).json({ message: "User not found!" });
-  }
-  try {
-    const data = {
-      ...User["_doc"],
-      password: null,
-      _id: null,
-      username: null,
-      timestamp: null,
-    };
-    res.status(200).json({ data });
-  } catch {
-    res.status(500).json({ message: "Error" });
-  }
-});
+// app.get("/get", async (req, res) => {
+//   const User = await UserAuth.findOne({ pnumber: req.query.pn });
+//   if (User == null) {
+//     return res.status(400).json({ message: "User not found!" });
+//   }
+//   try {
+//     const data = {
+//       ...User["_doc"],
+//       password: null,
+//       _id: null,
+//       username: null,
+//       timestamp: null,
+//     };
+//     res.status(200).json({ data });
+//   } catch {
+//     res.status(500).json({ message: "Error" });
+//   }
+// });
 
 // VALIDATE USER
 app.get("/validate/:username", async (req, res) => {
@@ -230,6 +251,21 @@ app.get("/application/:username", async (req, res) => {
     username: req.params.username,
   });
   if (Application == null) {
+    return res.status(400).json({ message: "No applications found!" });
+  }
+  try {
+    res.status(200).json({ data: Application });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// TRACK LMIA
+app.get("/status", async (req, res) => {
+  const Application = await Applications.findOne({
+    uci: req.query.uci,
+  });
+  if (Application === null) {
     return res.status(400).json({ message: "No applications found!" });
   }
   try {

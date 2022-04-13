@@ -31,6 +31,7 @@ function AdminApplications() {
   const [msg4read, setMsg4read] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const [userValidate, setUserValidate] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   function SubmitApplication(e) {
     e.preventDefault();
@@ -55,12 +56,18 @@ function AdminApplications() {
         msg4: [msg4Subject, msg4sent, msg4read],
       })
       .then((res) => {
+        setTimeout(() => {
+          setShowPopup(true);
+        }, 2000);
         if (res.status === 201) {
           setErrorMsg(res.data["message"]);
         }
       })
       .catch((error) => {
         setErrorMsg(error.response.data["message"]);
+        setTimeout(() => {
+          setShowPopup(true);
+        }, 2000);
       });
   }
 
@@ -322,6 +329,11 @@ function AdminApplications() {
           </div>
         )}
       </Body>
+      {showPopup && (
+        <p onClick={() => setShowPopup(false)} className="popup">
+          {errorMsg}
+        </p>
+      )}
     </Main>
   );
 }
@@ -332,6 +344,23 @@ const Main = styled.div`
   width: 100vw;
   display: grid;
   grid-template-rows: 60px 50px auto;
+
+  .popup {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    z-index: 10;
+    background-color: whitesmoke;
+    height: 75vh;
+    width: 80vw;
+    display: grid;
+    place-items: center;
+    font-weight: bolder;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    border: 3px solid #444;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const Nav = styled.div`

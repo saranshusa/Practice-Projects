@@ -14,17 +14,17 @@ const Home = () => {
   function HandleSubmit(e) {
     e.preventDefault();
     axios
-      .get("https://amelcs.herokuapp.com/get", {
+      .get("https://amelcs.herokuapp.com/status", {
         params: {
-          sfn: SFN,
+          uci: SFN,
           pn: PN,
           country: Country,
         },
       })
       .then((res) => {
         if (res.status === 200) {
-          sessionStorage.setItem("userId", res.data["username"]);
-          navigate("/dashboard");
+          sessionStorage.setItem("trackData", JSON.stringify(res.data["data"]));
+          navigate("/status");
         }
       })
       .catch((error) => {

@@ -1,0 +1,16 @@
+{
+  "short_name": "File Share by Link",
+  "name": "File Share by Link",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#008080",
+  "background_color": "#008080"
+}

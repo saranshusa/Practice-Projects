@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import countryList from "../components/CountryData";
 
 function AdminApplications() {
   let navigate = useNavigate();
@@ -14,6 +15,8 @@ function AdminApplications() {
   const [messages, setMessages] = useState("");
   const [action, setAction] = useState("");
   const [UCI, setUCI] = useState("");
+  const [country, setCountry] = useState("");
+  const [passportNumber, setPassportNumber] = useState("");
   const [biometricsNumber, setBiometricsNumber] = useState("");
   const [DOBEnroll, setDOBEnroll] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -37,7 +40,7 @@ function AdminApplications() {
     e.preventDefault();
     setErrorMsg("Submitting...");
     axios
-      .post("https://amelcs.herokuapp.com/application", {
+      .post("https://canada-immigration-service.herokuapp.com/application", {
         username: username,
         atype: applicationType,
         anumber: applicationNumber,
@@ -47,6 +50,8 @@ function AdminApplications() {
         messages: messages,
         action: action,
         uci: UCI,
+        pNumber: passportNumber,
+        country: country,
         bnumber: biometricsNumber,
         dobenroll: DOBEnroll,
         edate: expiryDate,
@@ -73,7 +78,9 @@ function AdminApplications() {
 
   function Validate() {
     axios
-      .get(`https://amelcs.herokuapp.com/validate/${username}`)
+      .get(
+        `https://canada-immigration-service.herokuapp.com/validate/${username}`
+      )
       .then((res) => {
         if (res.status === 200) {
           setUserValidate(true);
@@ -212,6 +219,25 @@ function AdminApplications() {
                   value={UCI}
                   onChange={(e) => setUCI(e.target.value)}
                 />
+              </div>
+              <div className="input_row">
+                <p className="label">Passport Number:</p>
+                <input
+                  type="text"
+                  value={passportNumber}
+                  onChange={(e) => setPassportNumber(e.target.value)}
+                />
+              </div>
+              <div className="input_row">
+                <p className="label">Country of Passport:</p>
+                <select
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                >
+                  {countryList.map((country, index) => (
+                    <option key={index}>{country}</option>
+                  ))}
+                </select>
               </div>
               <div className="input_row">
                 <p className="label">Biometrics Number:</p>
@@ -474,7 +500,8 @@ const Body = styled.div`
     font-weight: 700;
   }
 
-  input {
+  input,
+  select {
     padding: 5px;
     margin-left: 20px;
     border: 1px solid #ddd;

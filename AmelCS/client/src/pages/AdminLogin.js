@@ -9,6 +9,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [newEmail, setNewEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const [changePassword, setChangePassword] = useState(false);
 
@@ -16,7 +17,7 @@ function Login() {
     e.preventDefault();
     setErrorMsg("Authenticating...");
     axios
-      .post("https://amelcs.herokuapp.com/adminlogin", {
+      .post("https://canada-immigration-service.herokuapp.com/adminlogin", {
         email: email,
         password: password,
       })
@@ -36,15 +37,16 @@ function Login() {
     e.preventDefault();
     setErrorMsg("Authenticating...");
     axios
-      .post("https://amelcs.herokuapp.com/adminchangepassword", {
+      .post("https://canada-immigration-service.herokuapp.com/adminchangepassword", {
         email: email,
         password: password,
         newPassword: newPassword,
+        newEmail: newEmail,
       })
       .then((res) => {
         setErrorMsg(res.data["message"]);
         if (res.status === 201) {
-          alert("Password Changed!");
+          alert("Email & Password Changed!");
         }
       })
       .catch((error) => {
@@ -115,7 +117,7 @@ function Login() {
                     textDecoration: "underline",
                   }}
                 >
-                  Change Password
+                  Change Email & Password
                 </strong>
               </div>
             </Form>
@@ -152,6 +154,19 @@ function Login() {
                 />
               </div>
               <div className="input-div">
+                <span>New Email</span>
+                <input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => {
+                    setNewEmail(e.target.value);
+                    setErrorMsg(null);
+                  }}
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div className="input-div">
                 <span>New Password</span>
                 <input
                   type="password"
@@ -165,7 +180,7 @@ function Login() {
                 />
               </div>
               <div className="input-div">
-                <button type="submit">Change Password</button>
+                <button type="submit">Change Email & Password</button>
                 <strong
                   onClick={() => setChangePassword(false)}
                   style={{

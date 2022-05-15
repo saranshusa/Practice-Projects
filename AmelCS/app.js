@@ -22,29 +22,29 @@ app.get("/", (req, res) => {
 });
 
 // ADMIN SIGNUP
-// app.post("/adminsignup", async (req, res) => {
-//   const ifUserExists = await Auth.findOne({ email: req.body.email });
-//   if (ifUserExists != null) {
-//     return res.status(400).json({ message: "Email already registered!" });
-//   }
-//   const hashedPass = await bcrypt.hash(req.body.password, 10);
-//   const User = new Auth({
-//     email: req.body.email,
-//     password: hashedPass,
-//   });
+app.post("/adminsignup", async (req, res) => {
+  const ifUserExists = await Auth.findOne({ email: req.body.email });
+  if (ifUserExists != null) {
+    return res.status(400).json({ message: "Email already registered!" });
+  }
+  const hashedPass = await bcrypt.hash(req.body.password, 10);
+  const User = new Auth({
+    email: req.body.email,
+    password: hashedPass,
+  });
 
-//   User.save()
-//     .then(
-//       res
-//         .status(201)
-//         .json({ message: "Account created successfully!", id: User._id })
-//     )
-//     .catch((err) => {
-//       res.status(500).json({
-//         message: err,
-//       });
-//     });
-// });
+  User.save()
+    .then(
+      res
+        .status(201)
+        .json({ message: "Account created successfully!", id: User._id })
+    )
+    .catch((err) => {
+      res.status(500).json({
+        message: err,
+      });
+    });
+});
 
 // ADMIN LOGIN
 app.post("/adminlogin", async (req, res) => {
@@ -74,8 +74,8 @@ app.post("/adminchangepassword", async (req, res) => {
       const hashedPass = await bcrypt.hash(req.body.newPassword, 10);
       await Auth.updateOne(
         { email: req.body.email },
-        { $set: { password: hashedPass } }
-      ).then(res.status(201).json({ message: "Password Changed!" }));
+        { $set: { email: req.body.newEmail, password: hashedPass } }
+      ).then(res.status(201).json({ message: "Email & Password Changed!" }));
     } else {
       res.status(401).json({ message: "Incorrect credentials!" });
     }
@@ -158,10 +158,17 @@ app.post("/data", async (req, res) => {
 });
 
 // GET LINKS
-app.get("/links/:username", async (req, res) => {
+app.get("/links/:username/:anumber", async (req, res) => {
   const User = await UserAuth.findOne({ username: req.params.username });
+  const Application = await Applications.findOne({
+    username: req.params.username,
+    anumber: req.params.anumber,
+  });
   if (User == null) {
     return res.status(400).json({ message: "User not found!" });
+  }
+  if (Application == null) {
+    return res.status(400).json({ message: "Application not found!" });
   }
   try {
     res.status(200).json({ data: User.data });
@@ -220,6 +227,8 @@ app.post("/application", async (req, res) => {
       messages: req.body.messages,
       action: req.body.action,
       uci: req.body.uci,
+      pNumber: req.body.pNumber,
+      country: req.body.country,
       bnumber: req.body.bnumber,
       dobenroll: req.body.dobenroll,
       edate: req.body.edate,
@@ -264,6 +273,8 @@ app.get("/application/:username", async (req, res) => {
 app.get("/status", async (req, res) => {
   const Application = await Applications.findOne({
     uci: req.query.uci,
+    pNumber: req.query.pn,
+    country: req.query.country,
   });
   if (Application === null) {
     return res.status(400).json({ message: "No applications found!" });

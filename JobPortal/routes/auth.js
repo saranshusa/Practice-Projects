@@ -3,17 +3,23 @@ const router = express.Router();
 const Auth = require("../models/Auth");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const ShortUniqueId = require("short-unique-id");
+const key = new ShortUniqueId();
 
 router.get("/", (req, res) => {
-  Auth.find()
-    .then((data) => {
-      res.status(200).json(data);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: err,
-      });
-    });
+  const sessionkey = key.stamp(32);
+
+  const recoveredTimestamp = uid.parseStamp(sessionkey);
+  res.json({ key: sessionkey, time: recoveredTimestamp });
+  // Auth.find()
+  //   .then((data) => {
+  //     res.status(200).json(data);
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).json({
+  //       message: err,
+  //     });
+  //   });
 });
 
 // SIGNUP
@@ -40,11 +46,7 @@ router.post("/signup", async (req, res) => {
     });
 
     User.save()
-      .then(
-        res
-          .status(201)
-          .json({ message: "Account created successfully!", id: User._id })
-      )
+      .then(res.status(201).json({ message: "Account created successfully!" }))
       .catch((err) => {
         res.status(500).json({
           message: err,
@@ -57,12 +59,7 @@ router.post("/signup", async (req, res) => {
 
 // LOGIN
 router.post("/login", async (req, res) => {
-  if (
-    req.body.name === "" ||
-    req.body.email === "" ||
-    req.body.password === "" ||
-    req.body.phone === ""
-  )
+  if (req.body.email === "" || req.body.password === "")
     return res.status(500).json({ message: "Incomplete data submitted!" });
 
   const User = await Auth.findOne({ email: req.body.email });
@@ -71,7 +68,19 @@ router.post("/login", async (req, res) => {
   }
   try {
     if (await bcrypt.compare(req.body.password, User.password)) {
-      res.status(200).json({ message: "Login success!", id: User._id });
+      const sessionKey = key.stamp(32);
+      await Auth.findOneAndUpdate(
+        { email: req.body.email },
+        { $set: { sessionKey: sessionKey } }
+      );
+      res.status(200).json({
+        message: "Login success!",
+        email: req.body.email,
+        name: User.name,
+        sessionKey: sessionKey,
+        onboarded: User.onboarded,
+        role: User.role,
+      });
     } else {
       res.status(401).json({ message: "Incorrect credentials!" });
     }
@@ -82,12 +91,7 @@ router.post("/login", async (req, res) => {
 
 // SEND OTP
 router.post("/sendotp", async (req, res) => {
-  if (
-    req.body.name === "" ||
-    req.body.email === "" ||
-    req.body.password === "" ||
-    req.body.phone === ""
-  )
+  if (req.body.email === "")
     return res.status(500).json({ message: "Incomplete data submitted!" });
 
   const User = await Auth.findOne({ email: req.body.email });
@@ -130,6 +134,9 @@ router.post("/sendotp", async (req, res) => {
 
 // VERIFY OTP AND RESET PASSWORD
 router.post("/verifyotp", async (req, res) => {
+  if (req.body.email === "" || req.body.otp === "")
+    return res.status(500).json({ message: "Incomplete data submitted!" });
+
   const User = await Auth.findOne({ email: req.body.email });
   if (User == null) {
     return res.status(400).json({ message: "Email not registered!" });
@@ -149,5 +156,11 @@ router.post("/verifyotp", async (req, res) => {
     res.status(500).json({ message: "Error" });
   }
 });
+
+// TEST
+// router.get("/delete", async (req, res) => {
+//   await Auth.remove({});
+//   res.status(200).json({ message: "Success!" });
+// });
 
 module.exports = router;

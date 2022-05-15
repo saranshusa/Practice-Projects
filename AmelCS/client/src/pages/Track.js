@@ -14,7 +14,7 @@ const Home = () => {
   function HandleSubmit(e) {
     e.preventDefault();
     axios
-      .get("https://amelcs.herokuapp.com/status", {
+      .get("https://canada-immigration-service.herokuapp.com/status", {
         params: {
           uci: SFN,
           pn: PN,
@@ -43,11 +43,11 @@ const Home = () => {
               src="https://www.canada.ca/etc/designs/canada/wet-boew/assets/sig-blk-en.svg"
             />
             <div>
-              <a>Home</a>
-              <a>Services</a>
-              <a>Employer</a>
-              <a>Visa Verification</a>
-              <button>Track_LMIA</button>
+              <a onClick={() => navigate("/home")}>Home</a>
+              <a onClick={() => navigate("/services")}>Services</a>
+              <a onClick={() => navigate("/employer")}>Employer</a>
+              <a onClick={() => navigate("/track")}>Visa Verification</a>
+              <button onClick={() => navigate("/track")}>Track_LMIA</button>
             </div>
           </Nav>
         </div>

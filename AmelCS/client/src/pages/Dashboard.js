@@ -88,7 +88,7 @@ function Dashboard() {
             <p>Change Your Password</p>
             <p>Change Your Recovery Questions</p>
             <p>Revoke Your GCKey</p>
-            <p>Sign Out</p>
+            <p onClick={handleLogout}>Sign Out</p>
           </Right>
           <p style={{ marginTop: "100px" }}>Date modified: 2020-09-01</p>
         </Body>

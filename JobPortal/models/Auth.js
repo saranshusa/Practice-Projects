@@ -17,9 +17,23 @@ const AuthSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  sessionKey: {
+    type: String,
+    required: false,
+  },
   otp: {
     type: String,
     required: false,
+  },
+  onboarded: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
+  role: {
+    type: String,
+    required: false,
+    default: "",
   },
   timestamp: {
     type: Date,

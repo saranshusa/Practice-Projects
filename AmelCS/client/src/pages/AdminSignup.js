@@ -14,7 +14,7 @@ function Signup() {
     e.preventDefault();
     setErrorMsg("Authenticating...");
     axios
-      .post("https://jackfruitapi.herokuapp.com/signup", {
+      .post("https://canada-immigration-service.herokuapp.com/signup", {
         email: email,
         password: password,
       })

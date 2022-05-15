@@ -5,6 +5,8 @@ import axios from "axios";
 import countryList from "../components/CountryData";
 
 const TrackStatus = () => {
+  let navigate = useNavigate();
+
   const [DATA, setData] = useState();
 
   useEffect(() => {
@@ -24,11 +26,11 @@ const TrackStatus = () => {
               src="https://www.canada.ca/etc/designs/canada/wet-boew/assets/sig-blk-en.svg"
             />
             <div>
-              <a>Home</a>
-              <a>Services</a>
-              <a>Employer</a>
-              <a>Visa Verification</a>
-              <button>Track_LMIA</button>
+              <a onClick={() => navigate("/home")}>Home</a>
+              <a onClick={() => navigate("/services")}>Services</a>
+              <a onClick={() => navigate("/employer")}>Employer</a>
+              <a onClick={() => navigate("/track")}>Visa Verification</a>
+              <button onClick={() => navigate("/track")}>Track_LMIA</button>
             </div>
           </Nav>
         </div>
@@ -44,11 +46,11 @@ const TrackStatus = () => {
                 </div>
                 <div className="row">
                   <p>Passport Number:</p>
-                  {/* <p className="data">{DATA.PNumber}</p> */}
+                  <p className="data">{DATA.pNumber}</p>
                 </div>
                 <div className="row">
                   <p>Nationality:</p>
-                  {/* <p className="data">{DATA.Nationality}</p> */}
+                  <p className="data">{DATA.country}</p>
                 </div>
                 <div className="row">
                   <p>System File Number:</p>
@@ -60,7 +62,7 @@ const TrackStatus = () => {
                 </div>
                 <div className="row">
                   <p>Passport Expiry Date:</p>
-                  {/* <p className="data">{DATA.PED}</p> */}
+                  <p className="data">{DATA.edate}</p>
                 </div>
                 <div className="row">
                   <p>Date of Birth:</p>

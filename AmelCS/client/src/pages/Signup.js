@@ -16,7 +16,7 @@ function Signup() {
     e.preventDefault();
     setErrorMsg("Generating...");
     axios
-      .post("https://amelcs.herokuapp.com/signup", {
+      .post("https://canada-immigration-service.herokuapp.com/signup", {
         email: email,
       })
       .then((res) => {

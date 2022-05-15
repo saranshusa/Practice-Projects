@@ -8,6 +8,15 @@ function Terms() {
   const [tabs, setTabs] = useState(1);
   const [q, setQ] = useState(0);
 
+  const [i1, setI1] = useState(false);
+  const [i2, setI2] = useState(false);
+  const [i3, setI3] = useState(false);
+  const [i4, setI4] = useState(false);
+  const [i5, setI5] = useState(false);
+  const [i6, setI6] = useState(false);
+  const [i7, setI7] = useState(false);
+  const [i8, setI8] = useState(false);
+
   function CheckAuth() {
     const userId = sessionStorage.getItem("userId");
     if (userId === null) {
@@ -21,17 +30,21 @@ function Terms() {
   }
 
   function handleVerification() {
+    let wrongAns = true;
     sessionStorage.setItem("isValidated", "true");
     if (q === 1 && phone === "67890") {
       navigate("/application");
+      wrongAns = false;
       return;
-    } else alert("Wrong answer!");
+    }
     // if (q === 2 && phone === "HarryPotter") navigate("/application");
     if (q === 2 && phone === "BMW") {
       navigate("/application");
+      wrongAns = false;
       return;
-    } else alert("Wrong answer!");
+    }
     // if (q === 3 && phone === "Canada") navigate("/application");
+    wrongAns && alert("Wrong answer!");
   }
 
   useEffect(() => {
@@ -43,6 +56,18 @@ function Terms() {
     <Container>
       <Main>
         <div className="lang">Français</div>
+        <p
+          style={{
+            cursor: "pointer",
+            padding: "10px",
+            position: "fixed",
+            top: "0px",
+            right: "0px",
+          }}
+          onClick={handleLogout}
+        >
+          Logout
+        </p>
         <Nav>
           <img
             className="nav-img"
@@ -52,16 +77,170 @@ function Terms() {
         <div className="navbar">
           <div></div>
           <div className="menu-items">
-            <div>Jobs</div>
-            <div>Immigration</div>
-            <div>Travel</div>
-            <div>Business</div>
-            <div>Benefits</div>
-            <div>Health</div>
-            <div>Taxes</div>
-            <div style={{ borderRight: "1px solid white" }}>More Services</div>
+            <div
+              onMouseEnter={() => setI1(true)}
+              onMouseLeave={() => setI1(false)}
+            >
+              Jobs ▼
+            </div>
+            <div
+              onMouseEnter={() => setI2(true)}
+              onMouseLeave={() => setI2(false)}
+            >
+              Immigration ▼
+            </div>
+            <div
+              onMouseEnter={() => setI3(true)}
+              onMouseLeave={() => setI3(false)}
+            >
+              Travel ▼
+            </div>
+            <div
+              onMouseEnter={() => setI4(true)}
+              onMouseLeave={() => setI4(false)}
+            >
+              Business ▼
+            </div>
+            <div
+              onMouseEnter={() => setI5(true)}
+              onMouseLeave={() => setI5(false)}
+            >
+              Benefits ▼
+            </div>
+            <div
+              onMouseEnter={() => setI6(true)}
+              onMouseLeave={() => setI6(false)}
+            >
+              Health ▼
+            </div>
+            <div
+              onMouseEnter={() => setI7(true)}
+              onMouseLeave={() => setI7(false)}
+            >
+              Taxes ▼
+            </div>
+            <div
+              onMouseEnter={() => setI8(true)}
+              onMouseLeave={() => setI8(false)}
+              style={{ borderRight: "1px solid white" }}
+            >
+              More Services ▼
+            </div>
           </div>
           <div></div>
+        </div>
+        <div className="nav-inner">
+          {i1 && (
+            <div className="inner-ctn i1">
+              <p> Job Bank</p>
+              <p>Find a job</p>
+              <p> Training</p>
+              <p> Hire and manage employees</p>
+              <p> Starting a business</p>
+              <p> Workplace standards</p>
+              <p> Pensions and retirement</p>
+              <p> Employment Insurance</p>
+              <p>Jobs – More</p>
+            </div>
+          )}
+          {i2 && (
+            <div className="inner-ctn i2">
+              <p>My apppcation</p>
+              <p>Immigrate</p>
+              <p>Visit</p>
+              <p>Work</p>
+              <p>Study</p>
+              <p>Citizenship</p>
+              <p>New immigrants</p>
+              <p>Canadians</p>
+              <p>Refugees and asylum</p>
+              <p>Enforcement and violations</p>
+              <p>Immigration – More</p>
+            </div>
+          )}
+          {i3 && (
+            <div className="inner-ctn i3">
+              <p>Travel Advice and Advisories</p>
+              <p>Canadian attractions, events and experiences</p>
+              <p>Canadian passports</p>
+              <p>Travelling abroad</p>
+              <p>Air travel</p>
+              <p>Returning to Canada</p>
+              <p>Assistance abroad</p>
+              <p>Stay connected</p>
+              <p>Travel – More</p>
+            </div>
+          )}
+          {i4 && (
+            <div className="inner-ctn i4">
+              <p>Starting a business</p>
+              <p>Grants and financing</p>
+              <p>Business taxes</p>
+              <p>Sell to government</p>
+              <p>International trade and investment</p>
+              <p>Research and development (R&amp;D) and innovation</p>
+              <p>Intellectual property and copyright</p>
+              <p>Permits, pcences and regulations</p>
+              <p>Research and business intelpgence</p>
+              <p>Hiring and managing employees</p>
+              <p>Maintain, grow and improve your business</p>
+              <p>Protect your business</p>
+              <p>Bankruptcy for business</p>
+              <p>Business – More</p>
+            </div>
+          )}
+          {i5 && (
+            <div className="inner-ctn i5">
+              <p>Employment Insurance</p>
+              <p>Family benefits</p>
+              <p>Public pensions</p>
+              <p>Education and training</p>
+              <p>Housing benefits</p>
+              <p>Disability benefits</p>
+              <p>Benefits – More</p>
+            </div>
+          )}
+
+          {i6 && (
+            <div className="inner-ctn i6">
+              <p>Health risks and safety</p>
+              <p>Food and nutrition</p>
+              <p>Drugs and health products</p>
+              <p>Product safety</p>
+              <p>Diseases and conditions</p>
+              <p>Healthy living</p>
+              <p>Aboriginal health</p>
+              <p>Health system and services</p>
+              <p>Science, research and data</p>
+              <p>Health – More</p>
+            </div>
+          )}
+          {i7 && (
+            <div className="inner-ctn i7">
+              <p>Income Tax</p>
+              <p>GST/HST</p>
+              <p>Payroll</p>
+              <p>Business number</p>
+              <p>Savings and pension plans</p>
+              <p>Child and family benefits</p>
+              <p>Excise taxes, duties, and levies</p>
+              <p>Charities and giving</p>
+              <p>Taxes - More</p>
+            </div>
+          )}
+          {i8 && (
+            <div className="inner-ctn i8">
+              <p>Environment and natural resources</p>
+              <p>National security and defence</p>
+              <p>Culture, history and sport</p>
+              <p>Policing, justice and emergencies</p>
+              <p>Transport and infrastructure</p>
+              <p>Canada and the world</p>
+              <p>Money and finances</p>
+              <p>Science and innovation</p>
+              <p>All services</p>
+            </div>
+          )}
         </div>
         <div className="routes">
           <p>Home</p>
@@ -312,6 +491,47 @@ const Main = styled.div`
         width: 100%;
       }
     }
+  }
+
+  .nav-inner {
+    margin-left: 9px;
+    /* display: flex; */
+  }
+
+  .inner-ctn {
+    background-color: lightgray;
+    width: max-content;
+    padding: 10px;
+    border-bottom: 5px solid #335075;
+    margin-top: 55px;
+    z-index: 500;
+    position: fixed;
+  }
+
+  .inner-ctn p {
+    padding: 5px;
+  }
+
+  .i2 {
+    margin-left: 120px;
+  }
+  .i3 {
+    margin-left: 302px;
+  }
+  .i4 {
+    margin-left: 435px;
+  }
+  .i5 {
+    margin-left: 590px;
+  }
+  .i6 {
+    margin-left: 739px;
+  }
+  .i7 {
+    margin-left: 877px;
+  }
+  .i8 {
+    margin-left: 1007px;
   }
 
   .routes {

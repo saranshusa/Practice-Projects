@@ -9,6 +9,7 @@ function Admin() {
   let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [aNumber, setANumber] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const [statusMsg, setStatusMsg] = useState(null);
   const [tabToRender, setTabToRender] = useState(1);
@@ -17,12 +18,13 @@ function Admin() {
   const [file1, setFile1] = useState({});
   const [file2, setFile2] = useState({});
   const [file3, setFile3] = useState({});
+  const [file4, setFile4] = useState({});
 
   function HandleCreateUser(e) {
     e.preventDefault();
     setErrorMsg("Submitting...");
     axios
-      .post("https://amelcs.herokuapp.com/signup", {
+      .post("https://canada-immigration-service.herokuapp.com/signup", {
         username: username,
         password: password,
       })
@@ -73,6 +75,12 @@ function Admin() {
     uploadFiles(file, 3);
   }
 
+  function HandleFile4Upload(e) {
+    e.preventDefault();
+    const file = e.target[0].files[0];
+    uploadFiles(file, 4);
+  }
+
   const uploadFiles = (file, fileNumber) => {
     if (!file) return;
     if (username === "") {
@@ -103,6 +111,11 @@ function Admin() {
             progress: prog,
           });
         }
+        if (fileNumber === 4) {
+          setFile4({
+            progress: prog,
+          });
+        }
       },
       (error) => alert(error),
       () => {
@@ -125,6 +138,12 @@ function Admin() {
               link: downloadURL,
             });
           }
+          if (fileNumber === 4) {
+            setFile4({
+              name: file.name,
+              link: downloadURL,
+            });
+          }
         });
       }
     );
@@ -143,6 +162,10 @@ function Admin() {
       name: file3.name,
       link: file3.link,
     },
+    {
+      name: file4.name,
+      link: file4.link,
+    },
   ];
 
   function postUserData() {
@@ -151,7 +174,7 @@ function Admin() {
     }
     setStatusMsg("Saving...");
     axios
-      .post("https://amelcs.herokuapp.com/data", {
+      .post("https://canada-immigration-service.herokuapp.com/data", {
         username: username,
         data: fileData,
       })
@@ -169,11 +192,17 @@ function Admin() {
   }
 
   function getUserData() {
-    if (username === "") {
+    setFile1({});
+    setFile2({});
+    setFile3({});
+    setFile4({});
+    if (username === "" || aNumber === "") {
       return;
     }
     axios
-      .get(`https://amelcs.herokuapp.com/links/${username}`)
+      .get(
+        `https://canada-immigration-service.herokuapp.com/links/${username}/${aNumber}`
+      )
       .then((res) => {
         if (res.status === 200) {
           if (res.data["data"].length === 0) {
@@ -195,6 +224,11 @@ function Admin() {
             setFile3({
               name: res.data["data"][2]["name"],
               link: res.data["data"][2]["link"],
+            });
+          res.data["data"][3]["name"] &&
+            setFile4({
+              name: res.data["data"][3]["name"],
+              link: res.data["data"][3]["link"],
             });
           setAuthDetails(true);
         }
@@ -294,6 +328,13 @@ function Admin() {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  style={{ marginRight: "100px" }}
+                />
+                Application Number
+                <input
+                  type="text"
+                  value={aNumber}
+                  onChange={(e) => setANumber(e.target.value)}
                 />
               </div>
               <button
@@ -309,6 +350,10 @@ function Admin() {
                 onClick={() => {
                   setUsername("");
                   setAuthDetails(false);
+                  setFile1({});
+                  setFile2({});
+                  setFile3({});
+                  setFile4({});
                 }}
               >
                 Reset
@@ -344,6 +389,14 @@ function Admin() {
                 </File>
                 <p className="up-percent">{file3 && file3.progress} %</p>
               </Card>
+              <Card>
+                <p className="file-number">File 4</p>
+                <File onSubmit={HandleFile4Upload}>
+                  <input type="file" />
+                  <button type="submit">Upload File</button>
+                </File>
+                <p className="up-percent">{file4 && file4.progress} %</p>
+              </Card>
             </div>
 
             <Status>
@@ -371,6 +424,13 @@ function Admin() {
                   <a href={file3.link}>Download</a>
                 </div>
               )}
+              {file4 && (
+                <div className="file-status">
+                  <p>File 4</p>
+                  <p>{file4.name}</p>
+                  <a href={file4.link}>Download</a>
+                </div>
+              )}
 
               <button onClick={postUserData}>Save Changes</button>
             </Status>
@@ -389,7 +449,7 @@ function Admin() {
 export default Admin;
 
 const Main = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: grid;
   grid-template-rows: 60px 50px auto;
@@ -604,7 +664,7 @@ const Right = styled.div`
 
 const Upload = styled.div`
   display: grid;
-  grid-template-rows: 55px 50px auto auto;
+  grid-template-rows: 105px 50px auto auto;
   width: 100vw;
   height: 100%;
   place-items: center;

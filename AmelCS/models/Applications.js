@@ -45,6 +45,16 @@ const ApplicationsSchema = mongoose.Schema({
     required: false,
     default: "",
   },
+  pNumber: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  country: {
+    type: String,
+    required: false,
+    default: "",
+  },
   bnumber: {
     type: String,
     required: false,

@@ -159,6 +159,8 @@ app.post("/data", async (req, res) => {
 
 // GET LINKS
 app.get("/links/:username/:anumber", async (req, res) => {
+  console.log(req.params.username);
+  console.log(req.params.anumber);
   const User = await UserAuth.findOne({ username: req.params.username });
   const Application = await Applications.findOne({
     username: req.params.username,
@@ -167,6 +169,7 @@ app.get("/links/:username/:anumber", async (req, res) => {
   if (User == null) {
     return res.status(400).json({ message: "User not found!" });
   }
+  console.log(Application);
   if (Application == null) {
     return res.status(400).json({ message: "Application not found!" });
   }
@@ -232,6 +235,8 @@ app.post("/application", async (req, res) => {
       bnumber: req.body.bnumber,
       dobenroll: req.body.dobenroll,
       edate: req.body.edate,
+      lmia: req.body.lmia,
+      province: req.body.province,
       msg1: req.body.msg1,
       msg2: req.body.msg2,
       msg3: req.body.msg3,
@@ -281,6 +286,58 @@ app.get("/status", async (req, res) => {
   }
   try {
     res.status(200).json({ data: Application });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// GET ALL APPLICATIONS
+app.get("/all-applications", async (req, res) => {
+  const Application = await Applications.find({});
+  if (Application === null) {
+    return res.status(400).json({ message: "No applications found!" });
+  }
+  try {
+    res.status(200).json({ data: Application });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// DELETE AN APPLICATION
+app.post("/delete-application", async (req, res) => {
+  try {
+    await Applications.findByIdAndRemove(req.body.ID);
+    res.status(200).json({ message: "Application Deleted!" });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// UPDATE APPLICATION
+app.post("/update-application", async (req, res) => {
+  try {
+    await Applications.findByIdAndUpdate(req.body.ID, {
+      username: req.body.username,
+      atype: req.body.atype,
+      anumber: req.body.anumber,
+      aname: req.body.aname,
+      datesubmit: req.body.datesubmit,
+      currentstatus: req.body.currentstatus,
+      messages: req.body.messages,
+      action: req.body.action,
+      uci: req.body.uci,
+      pNumber: req.body.pNumber,
+      country: req.body.country,
+      bnumber: req.body.bnumber,
+      dobenroll: req.body.dobenroll,
+      lmia: req.body.lmia,
+      province: req.body.province,
+    });
+
+    res.status(201).json({
+      message: "Application updated successfully!",
+    });
   } catch {
     res.status(500).json({ message: "Error" });
   }

@@ -36,9 +36,7 @@ function Application() {
 
   function GetApplications(userName) {
     axios
-      .get(
-        `https://canada-immigration-service.herokuapp.com/application/${userName}`
-      )
+      .get(`https://canada-main.herokuapp.com/application/${userName}`)
       .then((res) => {
         if (res.status === 200) {
           setApplicationData(res.data["data"]);

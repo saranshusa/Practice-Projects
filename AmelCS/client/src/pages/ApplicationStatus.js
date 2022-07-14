@@ -43,7 +43,7 @@ function ApplicationStatus() {
   function getUserData() {
     axios
       .get(
-        `https://canada-immigration-service.herokuapp.com/links/${location.state.username}/${location.state.anumber}`
+        `https://canada-main.herokuapp.com/links/${location.state.username}/${location.state.anumber}`
       )
       .then((res) => {
         if (res.status === 200) {
@@ -295,7 +295,7 @@ function ApplicationStatus() {
               <p style={{ fontWeight: "bold" }}>Latest update:</p>
               <p style={{ fontWeight: "bold" }}>
                 Biometrics -{" "}
-                {appData.length > 0 && appData[appDataIndex]["datesubmit"]}:
+                {appData.length > 0 && appData[appDataIndex]["dobenroll"]}:
                 {/* March 16, 2022: */}
                 <span> Completed.</span>
               </p>
@@ -437,7 +437,7 @@ function ApplicationStatus() {
               </p>
               <p>
                 &#9675;{" "}
-                {appData.length > 0 && appData[appDataIndex]["datesubmit"]}:
+                {appData.length > 0 && appData[appDataIndex]["dobenroll"]}:
                 Completed.
               </p>
             </div>

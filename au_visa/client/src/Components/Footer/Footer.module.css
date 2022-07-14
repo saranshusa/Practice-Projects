@@ -1,0 +1,82 @@
+.blue {
+  background-color: #061a36;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  padding: 15px 50px;
+}
+.body {
+  background: url("../../Assets/footer-circle-bg.png") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 50px;
+  background-color: black;
+  color: white;
+}
+.links {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.links1 p {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+.links2 p {
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.footerLogo {
+  background: url("../../Assets/footer-logo-white.svg") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: 90%;
+}
+.footerAbout {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 40px 0;
+  max-width: 700px;
+  text-align: justify;
+}
+.quickLinks {
+  font-size: 0.8rem;
+  display: flex;
+  max-width: 700px;
+  flex-wrap: wrap;
+}
+.quickLinks p {
+  margin-right: 25px;
+}
+.chatLinks {
+  position: absolute;
+  bottom: 0;
+  padding: 10px 15px;
+  border-radius: 5px 5px 0px 0px;
+  color: white;
+  cursor: pointer;
+}
+.chatLinks:hover {
+  background-color: white;
+  color: black;
+}
+.orange {
+  background-color: #cb4b00;
+  right: 110px;
+}
+.blues {
+  background-color: #004d8c;
+  right: 5px;
+}
+.main {
+  position: relative;
+  margin-top: 50px;
+}
+
+@media screen and (max-width: 500px) {
+  .links {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

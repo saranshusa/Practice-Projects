@@ -40,7 +40,6 @@ const CandidateSchema = mongoose.Schema({
   },
   cv: {
     type: String,
-    required: true,
   },
   candidateID: {
     type: String,

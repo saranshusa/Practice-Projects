@@ -1,0 +1,236 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-width: 500px) {
+  .menu {
+    padding: 5px;
+    gap: 5px;
+  }
+  .menu span {
+    display: none;
+  }
+  .logo {
+    padding: 5px;
+    gap: 5px;
+  }
+  .logo img {
+    width: 75%;
+  }
+  .logo span {
+    display: none;
+  }
+  .search {
+    padding: 5px;
+  }
+  .afterHeader {
+    flex-direction: column;
+    align-items: center;
+  }
+  .banner {
+    grid-template-columns: 1fr;
+    height: 300px !important;
+  }
+
+  .flower {
+    display: none;
+  }
+  .banner_title {
+    height: fit-content;
+  }
+  .banner_title p {
+    height: 300px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: static;
+    bottom: unset !important;
+    max-width: 100% !important;
+    padding: 20px !important;
+  }
+  .tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    position: unset !important;
+    top: 0px !important;
+  }
+  .tabs p {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    background-color: #0c2a50;
+    color: white;
+  }
+  .grid {
+    display: block !important;
+  }
+  .left {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+.menu {
+  background: #004d8e;
+  padding: 25px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.1rem;
+}
+.logo {
+  background-color: #061a36;
+  color: white;
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  justify-content: center;
+}
+.search {
+  background-color: #0c294d;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.afterHeader {
+  display: flex;
+  font-size: 0.8rem;
+  gap: 25px;
+  background-color: #0f305b;
+  color: white;
+  padding: 5px;
+  justify-content: end;
+}
+.banner {
+  height: 500px;
+  background-color: #004d8d;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.flower {
+  width: 100%;
+  height: 100%;
+  background: url("../../Assets/Apple-tree-flowers.jpg") center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.banner_title {
+  color: white;
+  font-size: 2.25rem;
+}
+.banner_title p {
+  position: absolute;
+  bottom: 45%;
+  max-width: 40%;
+  padding: 25px;
+}
+.tabs {
+  display: flex;
+  justify-content: end;
+  position: relative;
+  top: -40px;
+}
+.tabs p {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  background-color: #0c2a50;
+  color: white;
+}
+.paragraphs {
+  padding: 25px;
+  padding-bottom: 0px;
+}
+.paragraphs h2 {
+  color: #061b36;
+  font-weight: 500;
+}
+.paragraphs p {
+  font-size: 1rem;
+  text-align: justify;
+  margin: 15px 0;
+}
+.paragraphs p a {
+  color: #0073e6;
+  text-decoration: underline;
+  cursor: pointer;
+}
+/* unvisited link */
+a:link {
+  color: #0073e6;
+}
+
+/* visited link */
+a:visited {
+  color: #0073e6;
+}
+
+/* mouse over link */
+a:hover {
+  color: #0073e6;
+}
+
+/* selected link */
+a:active {
+  color: #0073e6;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 33% 67%;
+}
+.left {
+  background: #f2f2f2;
+  margin-top: 20px;
+  margin-top: 2rem;
+  padding: 25px;
+  padding: 2.5rem;
+  height: fit-content;
+  margin-left: 50px;
+  margin-right: 25px;
+}
+.left p {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid #ccc;
+  color: #0c2a50;
+}
+.left p:nth-child(1) {
+  border-top: none;
+  color: #004d8e;
+  font-weight: 700;
+}
+.paragraphs h4 {
+  color: #0073e6;
+  font-weight: 500;
+  text-decoration: underline;
+  padding: 15px;
+}
+._3x2grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.paragraphs table tr:nth-child(even) {
+  background: #f2f2f2;
+}
+.paragraphs table tr td {
+  padding: 1rem;
+}
+
+@media screen and (min-width: 1200px) {
+  .left {
+    background: #f2f2f2;
+    margin-top: 20px;
+    margin-top: 2rem;
+    padding: 25px;
+    padding: 2.5rem;
+    height: fit-content;
+    margin-left: 150px;
+    margin-right: 75px;
+  }
+}

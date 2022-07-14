@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { storage } from "../firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import AllApplications from "../components/AllApplications";
 
 function Admin() {
   let navigate = useNavigate();
@@ -20,11 +21,13 @@ function Admin() {
   const [file3, setFile3] = useState({});
   const [file4, setFile4] = useState({});
 
+  const [reasyForUpload, setReasyForUpload] = useState(false);
+
   function HandleCreateUser(e) {
     e.preventDefault();
     setErrorMsg("Submitting...");
     axios
-      .post("https://canada-immigration-service.herokuapp.com/signup", {
+      .post("https://canada-main.herokuapp.com/signup", {
         username: username,
         password: password,
       })
@@ -172,9 +175,10 @@ function Admin() {
     if (username === "") {
       return;
     }
+    console.log(fileData);
     setStatusMsg("Saving...");
     axios
-      .post("https://canada-immigration-service.herokuapp.com/data", {
+      .post("https://canada-main.herokuapp.com/data", {
         username: username,
         data: fileData,
       })
@@ -200,9 +204,7 @@ function Admin() {
       return;
     }
     axios
-      .get(
-        `https://canada-immigration-service.herokuapp.com/links/${username}/${aNumber}`
-      )
+      .get(`https://canada-main.herokuapp.com/links/${username}/${aNumber}`)
       .then((res) => {
         if (res.status === 200) {
           if (res.data["data"].length === 0) {
@@ -235,6 +237,7 @@ function Admin() {
       })
       .catch((error) => {
         setStatusMsg(error.response.data["message"]);
+        setReasyForUpload(false);
       });
     setTimeout(() => {
       setStatusMsg(null);
@@ -267,6 +270,9 @@ function Admin() {
         </p>
         <p style={{ borderRight: "none" }} onClick={() => setTabToRender(2)}>
           Upload New Document
+        </p>
+        <p style={{ borderRight: "none" }} onClick={() => setTabToRender(3)}>
+          All Applications
         </p>
         <p onClick={() => navigate("/admin-applications")}>New Application</p>
       </Tab>
@@ -436,6 +442,8 @@ function Admin() {
             </Status>
           </Upload>
         )}
+
+        {tabToRender === 3 && <AllApplications />}
       </Body>
       {showPopup && (
         <p onClick={() => setShowPopup(false)} className="popup">
@@ -510,7 +518,7 @@ const Nav = styled.div`
 
 const Tab = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
 
   @media screen and (max-width: 500px) {
     place-items: center;

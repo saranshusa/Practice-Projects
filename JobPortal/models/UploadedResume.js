@@ -12,7 +12,9 @@ const UploadedResumeSchema = mongoose.Schema({
   },
   cv: {
     type: String,
-    required: true,
+  },
+  jobProfile: {
+    type: String,
   },
   timestamp: {
     type: Date,

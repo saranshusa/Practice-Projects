@@ -132,6 +132,21 @@ router.get("/all-featured-jobs", async (req, res) => {
   }
 });
 
+// GET JOB DETAILS
+router.get("/job-details", async (req, res) => {
+  console.log(req.query.jobID);
+  const TryJob = await Job.findOne({ jobID: req.query.jobID });
+
+  if (TryJob === null) {
+    return res.status(400).json({ message: "No Jobs found!" });
+  }
+  try {
+    res.status(200).json({ data: TryJob });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
 // TEST
 // router.get("/delete", async (req, res) => {
 //   await Job.remove({});

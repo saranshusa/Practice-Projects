@@ -122,6 +122,7 @@ router.post("/sendotp", async (req, res) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
+        console.log(error);
         res.status(500).json({ message: "Error in sending OTP!" });
       } else {
         res.status(200).json({ message: "OTP sent to email." });
@@ -152,6 +153,67 @@ router.post("/verifyotp", async (req, res) => {
     } else {
       return res.status(401).json({ message: "Incorrect OTP!" });
     }
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// GOOGLE SIGNUP
+router.post("/google-signup", async (req, res) => {
+  try {
+    if (req.body.name === "" || req.body.email === "")
+      return res.status(500).json({ message: "Incomplete data submitted!" });
+
+    const TryUser = await Auth.findOne({ email: req.body.email });
+    if (TryUser !== null)
+      return res
+        .status(400)
+        .json({ message: "User with this email already registered!" });
+
+    const FakePassword = key.stamp(32);
+
+    const hashedPass = await bcrypt.hash(FakePassword, 10);
+    const User = new Auth({
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPass,
+      phone: "GOOGLE",
+    });
+
+    User.save()
+      .then(res.status(201).json({ message: "Account created successfully!" }))
+      .catch((err) => {
+        res.status(500).json({
+          message: err,
+        });
+      });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// GOOGLE LOGIN
+router.post("/google-login", async (req, res) => {
+  if (req.body.email === "" || req.body.accessToken === "")
+    return res.status(500).json({ message: "Incomplete data submitted!" });
+
+  const User = await Auth.findOne({ email: req.body.email });
+  if (User == null) {
+    return res.status(400).json({ message: "Email not registered!" });
+  }
+  try {
+    await Auth.findOneAndUpdate(
+      { email: req.body.email },
+      { $set: { sessionKey: req.body.accessToken } }
+    );
+    res.status(200).json({
+      message: "Login success!",
+      email: req.body.email,
+      name: User.name,
+      sessionKey: req.body.accessToken,
+      onboarded: User.onboarded,
+      role: User.role,
+    });
   } catch {
     res.status(500).json({ message: "Error" });
   }

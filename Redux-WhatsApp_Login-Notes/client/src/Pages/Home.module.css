@@ -1,0 +1,40 @@
+.main {
+  background-color: antiquewhite;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.input_ctn {
+  position: relative;
+  width: 95%;
+  margin: 15px auto;
+}
+.input_ctn input,
+.button {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border: none;
+  padding: 10px 15px;
+  padding-left: 50px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  outline: none;
+}
+.input_ctn input:disabled {
+  background-color: lightgray;
+}
+.icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.button {
+  height: unset;
+  background-color: #25d366;
+  color: white;
+  padding: 15px 15px;
+  font-weight: normal;
+}

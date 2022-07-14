@@ -1,0 +1,106 @@
+.main {
+  background-color: #bebfc7;
+}
+.header {
+  background-color: #072243;
+  position: relative;
+}
+.header img {
+  margin: 10px;
+}
+.header h1 {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-weight: normal;
+  color: white;
+}
+.form_title {
+  background-color: #072243;
+  color: white;
+  padding: 6px 12px;
+}
+.body {
+  padding: 12px;
+}
+.form {
+  padding: 12px;
+  background-color: white;
+}
+.input_ctn {
+  margin: 10px 0;
+  display: flex;
+}
+.input_ctn input,
+.input_ctn select,
+.T_C {
+  position: absolute;
+  left: 40vw;
+}
+.btn_ctn {
+  background-color: #f2f2f2;
+  padding: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+.btn_ctn button {
+  padding: 3px 5px;
+}
+.help {
+  position: absolute;
+  left: 38vw;
+}
+.checkbox {
+  left: 0vw !important;
+  margin-top: 5px;
+}
+.T_C span {
+  margin-left: 25px;
+}
+.link {
+  color: #072243;
+  text-decoration: underline;
+}
+.footer {
+  display: flex;
+  background-color: white;
+  padding: 12px;
+  margin-top: 10px;
+  gap: 15px;
+}
+.footer p {
+  color: #072243;
+  text-decoration: underline;
+  cursor: pointer;
+}
+@media screen and (max-width: 500px) {
+  .input_ctn select {
+    width: 200px;
+  }
+  .header h1 {
+    right: 10px;
+    bottom: 10px;
+    font-size: 1rem;
+  }
+  .footer {
+    flex-wrap: wrap;
+  }
+  .footer p {
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+  .input_ctn input,
+  .input_ctn select,
+  .T_C {
+    position: unset;
+    left: unset;
+    margin-top: 5px;
+  }
+  .input_ctn select {
+    width: 100%;
+  }
+  .input_ctn {
+    flex-direction: column;
+  }
+}

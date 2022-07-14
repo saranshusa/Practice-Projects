@@ -229,6 +229,44 @@ router.post("/employer-update", async (req, res) => {
   }
 });
 
+// CANDIDATE PROFILE UPDATE
+router.post("/candidate-update", async (req, res) => {
+  try {
+    const User = await Auth.findOne({
+      email: req.body.email,
+      sessionKey: req.body.sessionKey,
+    });
+    if (User === null)
+      return res.status(401).json({ message: "Invalid session! Login again." });
+
+    const TryAccount = await CandidateAccount.findOne({
+      email: req.body.email,
+    });
+    if (TryAccount === null)
+      return res.status(400).json({ message: "Complete Onboarding First!" });
+
+    await CandidateAccount.findOneAndUpdate(
+      { email: req.body.email },
+      {
+        $set: {
+          phone: req.body.phone,
+          city: req.body.city,
+          country: req.body.country,
+          address: req.body.address,
+          social: req.body.social,
+          website: req.body.website === "" ? "NA" : req.body.website,
+          aboutYourself: req.body.aboutYourself,
+          profilePhoto: req.body.profilePhoto,
+          cv: req.body.cv,
+        },
+      }
+    );
+    res.status(201).json({ message: "Profile Updated successfully!" });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
 // TEST;
 // router.get("/delete", async (req, res) => {
 //   await Account.remove({});

@@ -6,6 +6,7 @@ const CandidateAccount = require("../models/CandidateAccount");
 const Job = require("../models/Job");
 const Admin = require("../models/Admin");
 const FeaturedJobs = require("../models/FeaturedJobs");
+const UploadedResume = require("../models/UploadedResume");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const ShortUniqueId = require("short-unique-id");
@@ -174,8 +175,8 @@ router.post("/admin-add-featured-job", async (req, res) => {
 router.post("/admin-remove-featured-job", async (req, res) => {
   try {
     const TryAdmin = await Admin.findOne({
-      email: req.query.email,
-      sessionKey: req.query.sessionKey,
+      email: req.body.email,
+      sessionKey: req.body.sessionKey,
     });
     if (TryAdmin === null)
       return res.status(401).json({ message: "Invalid session! Login again." });
@@ -194,7 +195,7 @@ router.post("/admin-remove-featured-job", async (req, res) => {
   }
 });
 
-// GET ALL RESUME
+// GET ALL CANDIDATES
 router.get("/admin-all-candidates", async (req, res) => {
   try {
     const TryAdmin = await Admin.findOne({
@@ -209,6 +210,26 @@ router.get("/admin-all-candidates", async (req, res) => {
       .limit(req.query.limit);
 
     return res.status(200).json({ data: TryCandidateAccount });
+  } catch {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+// GET ALL RESUME
+router.get("/admin-all-resume", async (req, res) => {
+  try {
+    const TryAdmin = await Admin.findOne({
+      email: req.query.email,
+      sessionKey: req.query.sessionKey,
+    });
+    if (TryAdmin === null)
+      return res.status(401).json({ message: "Invalid session! Login again." });
+
+    const TryUploadedResume = await UploadedResume.find({})
+      .sort({})
+      .limit(req.query.limit);
+
+    return res.status(200).json({ data: TryUploadedResume });
   } catch {
     res.status(500).json({ message: "Error" });
   }

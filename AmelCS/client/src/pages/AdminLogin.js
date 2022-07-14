@@ -17,7 +17,7 @@ function Login() {
     e.preventDefault();
     setErrorMsg("Authenticating...");
     axios
-      .post("https://canada-immigration-service.herokuapp.com/adminlogin", {
+      .post("https://canada-main.herokuapp.com/adminlogin", {
         email: email,
         password: password,
       })
@@ -37,7 +37,7 @@ function Login() {
     e.preventDefault();
     setErrorMsg("Authenticating...");
     axios
-      .post("https://canada-immigration-service.herokuapp.com/adminchangepassword", {
+      .post("https://canada-main.herokuapp.com/adminchangepassword", {
         email: email,
         password: password,
         newPassword: newPassword,

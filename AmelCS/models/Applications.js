@@ -70,6 +70,16 @@ const ApplicationsSchema = mongoose.Schema({
     required: false,
     default: "",
   },
+  lmia: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  province: {
+    type: String,
+    required: false,
+    default: "",
+  },
   msg1: {
     type: Array,
     required: false,

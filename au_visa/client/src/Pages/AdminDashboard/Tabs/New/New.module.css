@@ -1,0 +1,53 @@
+.main {
+  display: grid;
+  place-items: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+.main form {
+  border: 3px solid black;
+  padding: 15px;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 100vw;
+  display: grid;
+  place-items: center;
+  gap: 15px;
+  font-weight: bold;
+}
+.inputCtn {
+  width: 90%;
+}
+.inputCtn input,
+.inputCtn textarea {
+  width: 100%;
+  padding: 5px 10px;
+  margin-top: 5px;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid #999;
+  outline: none;
+}
+.main form button {
+  padding: 10px 30px;
+  background-color: lightseagreen;
+  border: none;
+  font-weight: bolder;
+  font-family: monospace;
+  font-size: 1.25rem;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.main form button:hover {
+  background-color: chartreuse;
+}
+strong {
+  padding: 10px;
+  font-style: italic;
+  font-family: monospace;
+  background-color: black;
+  color: white;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}

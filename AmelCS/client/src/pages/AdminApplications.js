@@ -20,6 +20,8 @@ function AdminApplications() {
   const [biometricsNumber, setBiometricsNumber] = useState("");
   const [DOBEnroll, setDOBEnroll] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
+  const [lmia, setLmia] = useState("");
+  const [province, setProvince] = useState("");
   const [msg1Subject, setMsg1Subject] = useState("");
   const [msg2Subject, setMsg2Subject] = useState("");
   const [msg3Subject, setMsg3Subject] = useState("");
@@ -40,7 +42,7 @@ function AdminApplications() {
     e.preventDefault();
     setErrorMsg("Submitting...");
     axios
-      .post("https://canada-immigration-service.herokuapp.com/application", {
+      .post("https://canada-main.herokuapp.com/application", {
         username: username,
         atype: applicationType,
         anumber: applicationNumber,
@@ -55,6 +57,8 @@ function AdminApplications() {
         bnumber: biometricsNumber,
         dobenroll: DOBEnroll,
         edate: expiryDate,
+        lmia: lmia,
+        province: province,
         msg1: [msg1Subject, msg1sent, msg1read],
         msg2: [msg2Subject, msg2sent, msg2read],
         msg3: [msg3Subject, msg3sent, msg3read],
@@ -78,9 +82,7 @@ function AdminApplications() {
 
   function Validate() {
     axios
-      .get(
-        `https://canada-immigration-service.herokuapp.com/validate/${username}`
-      )
+      .get(`https://canada-main.herokuapp.com/validate/${username}`)
       .then((res) => {
         if (res.status === 200) {
           setUserValidate(true);
@@ -220,7 +222,7 @@ function AdminApplications() {
                   onChange={(e) => setUCI(e.target.value)}
                 />
               </div>
-              <div className="input_row">
+              {/* <div className="input_row">
                 <p className="label">Passport Number:</p>
                 <input
                   type="text"
@@ -238,7 +240,7 @@ function AdminApplications() {
                     <option key={index}>{country}</option>
                   ))}
                 </select>
-              </div>
+              </div> */}
               <div className="input_row">
                 <p className="label">Biometrics Number:</p>
                 <input
@@ -263,6 +265,22 @@ function AdminApplications() {
                   onChange={(e) => setExpiryDate(e.target.value)}
                 />
               </div>
+              {/* <div className="input_row">
+                <p className="label">LMIA Validity</p>
+                <input
+                  type="text"
+                  value={lmia}
+                  onChange={(e) => setLmia(e.target.value)}
+                />
+              </div> */}
+              {/* <div className="input_row">
+                <p className="label">Province of Employment</p>
+                <input
+                  type="text"
+                  value={province}
+                  onChange={(e) => setProvince(e.target.value)}
+                />
+              </div> */}
               <div className="input_row">
                 <p className="label">Message 1</p>
                 <input

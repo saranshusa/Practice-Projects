@@ -24,14 +24,14 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/home" element={<Home />} />
+        {/* <Route path="/home" element={<Home />} /> */}
         <Route path="/application" element={<Application />} />
         <Route path="/termsandconditions" element={<Terms />} />
         <Route path="/application-status" element={<ApplicationStatus />} />
-        <Route path="/track" element={<Track />} />
-        <Route path="/status" element={<TrackStatus />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/employer" element={<Employer />} />
+        {/* <Route path="/track" element={<Track />} /> */}
+        {/* <Route path="/status" element={<TrackStatus />} /> */}
+        {/* <Route path="/services" element={<Services />} /> */}
+        {/* <Route path="/employer" element={<Employer />} /> */}
         <Route path="/admin" element={<Admin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="login" element={<Login />} />

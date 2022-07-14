@@ -31,13 +31,14 @@ router.post("/upload", async (req, res) => {
   }
 });
 
-// FEATURED JOB REMOVE
+// UPLOAD DIRECT RESUME
 router.post("/upload-resume", async (req, res) => {
   try {
     const Upload = new UploadedResume({
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
+      jobProfile: req.body.jobProfile,
       cv: req.body.cv,
     });
 

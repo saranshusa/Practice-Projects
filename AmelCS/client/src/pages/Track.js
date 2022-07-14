@@ -14,7 +14,7 @@ const Home = () => {
   function HandleSubmit(e) {
     e.preventDefault();
     axios
-      .get("https://canada-immigration-service.herokuapp.com/status", {
+      .get("https://canada-main.herokuapp.com/status", {
         params: {
           uci: SFN,
           pn: PN,

@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
     setErrorMsg("Authenticating...");
     axios
-      .post("https://canada-immigration-service.herokuapp.com/login", {
+      .post("https://canada-main.herokuapp.com/login", {
         username: email,
         password: password,
       })

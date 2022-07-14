@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const Razorpay = require('razorpay');
+
 const Order = require("../models/Order");
 
 router.get("/get-razorpay-key", (req, res) => {
@@ -14,10 +16,10 @@ router.post("/create-order", async (req, res) => {
     });
     const options = {
       amount: req.body.amount,
-      currency: "INR",
+      currency: 'INR',
     };
     const order = await instance.orders.create(options);
-    if (!order) return res.status(500).send("Some error occured");
+    if (!order) return res.status(500).send('Some error occured');
     res.send(order);
   } catch (error) {
     res.status(500).send(error);

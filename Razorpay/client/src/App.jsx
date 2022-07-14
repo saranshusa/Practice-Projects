@@ -7,7 +7,7 @@ function App() {
   const [orders, setOrders] = useState([]);
 
   async function fetchOrders() {
-    const { data } = await axios.get("/api/list-orders");
+    const { data } = await axios.get("http://localhost:5000/api/list-orders");
     setOrders(data);
   }
   useEffect(() => {
@@ -23,13 +23,13 @@ function App() {
     script.onload = async () => {
       try {
         setLoading(true);
-        const result = await axios.post("/api/create-order", {
+        const result = await axios.post("http://localhost:5000/api/create-order", {
           amount: orderAmount + "00",
         });
         const { amount, id: order_id, currency } = result.data;
         const {
           data: { key: razorpayKey },
-        } = await axios.get("/api/get-razorpay-key");
+        } = await axios.get("http://localhost:5000/api/get-razorpay-key");
 
         const options = {
           key: razorpayKey,
@@ -39,7 +39,7 @@ function App() {
           description: "example transaction",
           order_id: order_id,
           handler: async function (response) {
-            const result = await axios.post("/api/pay-order", {
+            const result = await axios.post("http://localhost:5000/api/pay-order", {
               amount: amount,
               razorpayPaymentId: response.razorpay_payment_id,
               razorpayOrderId: response.razorpay_order_id,
